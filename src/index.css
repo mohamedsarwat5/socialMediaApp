@@ -1,4 +1,4 @@
 @import "tailwindcss";
 .bg{
-    @apply bg-[#DB44A9] bg-[linear-gradient(147deg,rgba(219,68,169,1)_0%,rgba(173,78,166,1)_60%,rgba(161,54,221,1)_100%)]
+    @apply bg-[linear-gradient(135deg,#ec4899_0%,#9333ea_100%)]
 }
