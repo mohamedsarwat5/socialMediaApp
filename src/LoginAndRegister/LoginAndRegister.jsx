@@ -50,15 +50,15 @@ export default function LoginAndRegister() {
     return (
         <div className='min-h-[100dvh] w-full py-12 flex  flex-col bg-rose-950 px-5'>
 
-            <div className='flex items-center justify-center w-3/12 mx-auto mb-8   rounded-full'>
-                <button onClick={() => setActiveForm('singin')} className={`w-full rounded-full transition-all duration-500 ${activeForm === 'singin' ? 'bg' : 'bg-transparent'} text-white py-3 px-4 cursor-pointer`}>Sign in</button>
-                <button onClick={() => setActiveForm('register')} className={`w-full rounded-full transition-all duration-500 ${activeForm === 'register' ? 'bg' : 'bg-transparent'} text-white py-3 px-4 cursor-pointer`}> Register</button>
+            <div className='flex items-center justify-center w-full md:w-3/12 mx-auto mb-8  bg-white/20 rounded-full'>
+                <button onClick={() => setActiveForm('singin')} className={`w-full rounded-full ease-in-out transition-all duration-300 ${activeForm === 'singin' ? 'bg' : 'bg-transparent'} text-white py-3 px-4 cursor-pointer`}>Sign in</button>
+                <button onClick={() => setActiveForm('register')} className={`w-full rounded-full ease-in-out transition-all duration-300 ${activeForm === 'register' ? 'bg' : 'bg-transparent'} text-white py-3 px-4 cursor-pointer`}> Register</button>
             </div>
 
             <div className='relative md:w-3/12 w-full mx-auto flex   min-h-[500px]  overflow-hidden'>
                     <h2 className='text-center mx-auto text-white text-2xl font-semibold '>{activeForm === 'singin'?"Login now":"Register now"}</h2>
 
-                <div className={`space-y-3.5 absolute w-full translate-y-16 transition-all duration-300 ${activeForm === 'register' ? 'translate-x-0' : 'translate-x-[150%]'}`}>
+                <div className={`space-y-3.5 absolute w-full translate-y-16  ease-in-out transition-all duration-300 ${activeForm === 'register' ? 'translate-x-0' : 'translate-x-[150%]'}`}>
                     <form onSubmit={handleSubmit} className=" ">
                         <div className="mb-5">
                             {/* <label htmlFor="name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your name</label> */}
@@ -105,7 +105,7 @@ export default function LoginAndRegister() {
                         <button type="submit" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full  px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
                     </form>
                 </div>
-                <div className={`space-y-3.5 absolute w-full translate-y-16 transition-all duration-300 ${activeForm === 'singin' ? "translate-x-0" : '-translate-x-[150%]'}`}>
+                <div className={`space-y-3.5 absolute w-full translate-y-16 ease-in-out  transition-all duration-300 ${activeForm === 'singin' ? "translate-x-0" : '-translate-x-[150%]'}`}>
                     {/* <h2 className='text-center text-white text-2xl font-semibold '>Sign in Now</h2> */}
                     <form className=' ' onSubmit={formik.handleSubmit}>
                         <div className="mb-5">
