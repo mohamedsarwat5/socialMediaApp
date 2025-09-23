@@ -48,17 +48,17 @@ export default function LoginAndRegister() {
         onSubmit: handleSignIn
     })
     return (
-        <div className='min-h-[100dvh] w-full py-12 flex  flex-col bg-rose-950 px-5'>
+        <div className='min-h-[100dvh] w-full py-12 flex  flex-col hero px-5'>
 
-            <div className='flex items-center justify-center w-full md:w-3/12 mx-auto mb-8  bg-white/20 rounded-full'>
+            <div className='flex items-center justify-center w-full md:w-3/12 mx-auto mb-8  bg-white/10 rounded-full z-10'>
                 <button onClick={() => setActiveForm('singin')} className={`w-full rounded-full ease-in-out transition-all duration-300 ${activeForm === 'singin' ? 'bg' : 'bg-transparent'} text-white py-3 px-4 cursor-pointer`}>Sign in</button>
                 <button onClick={() => setActiveForm('register')} className={`w-full rounded-full ease-in-out transition-all duration-300 ${activeForm === 'register' ? 'bg' : 'bg-transparent'} text-white py-3 px-4 cursor-pointer`}> Register</button>
             </div>
 
-            <div className='relative md:w-3/12 w-full mx-auto flex   min-h-[500px]  overflow-hidden'>
-                    <h2 className='text-center mx-auto text-white text-2xl font-semibold '>{activeForm === 'singin'?"Login now":"Register now"}</h2>
+            <div className='relative md:w-3/12 w-full mx-auto flex  z-10 min-h-[500px]  overflow-hidden'>
+                    {/* <h2 className='text-center mx-auto text-white text-2xl font-semibold '>{activeForm === 'singin'?"Login now":"Register now"}</h2> */}
 
-                <div className={`space-y-3.5 absolute w-full translate-y-16  ease-in-out transition-all duration-300 ${activeForm === 'register' ? 'translate-x-0' : 'translate-x-[150%]'}`}>
+                <div className={`space-y-3.5 absolute w-full   ease-in-out transition-all duration-300 ${activeForm === 'register' ? 'translate-x-0' : 'translate-x-[150%]'}`}>
                     <form onSubmit={handleSubmit} className=" ">
                         <div className="mb-5">
                             {/* <label htmlFor="name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your name</label> */}
@@ -102,10 +102,10 @@ export default function LoginAndRegister() {
                                 female
                             </label>
                         </div>
-                        <button type="submit" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full  px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
+                        <button type="submit" className="text-white b font-medium rounded-lg text-sm w-full  px-5 py-2.5 text-center bg cursor-pointer">Submit</button>
                     </form>
                 </div>
-                <div className={`space-y-3.5 absolute w-full translate-y-16 ease-in-out  transition-all duration-300 ${activeForm === 'singin' ? "translate-x-0" : '-translate-x-[150%]'}`}>
+                <div className={`space-y-3.5 absolute w-full  ease-in-out  transition-all duration-300 ${activeForm === 'singin' ? "translate-x-0" : '-translate-x-[150%]'}`}>
                     {/* <h2 className='text-center text-white text-2xl font-semibold '>Sign in Now</h2> */}
                     <form className=' ' onSubmit={formik.handleSubmit}>
                         <div className="mb-5">
@@ -114,9 +114,9 @@ export default function LoginAndRegister() {
                         </div>
                         <div className="mb-5">
                             {/* <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your name</label> */}
-                            <input onChange={formik.handleChange} value={formik.values.password} type="password" name='password' id="password" className="text-white border border-gray-300  text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 outline-none transition-all duration-300 block w-full p-2.5 bg-transparent placeholder:text-white " placeholder="Enter your Password" required />
+                            <input onChange={formik.handleChange} value={formik.values.password} type="password" name='password' id="password" className="text-white border border-gray-300  text-sm rounded-lg focus:ring-blue-500 focus:border-[linear-gradient(135deg, #ec4899 0%, #9333ea 100%)] outline-none transition-all duration-300 block w-full p-2.5 bg-transparent placeholder:text-white " placeholder="Enter your Password" required />
                         </div>
-                        <button type="submit" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm  block w-full px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 ">Submit</button>
+                        <button type="submit" className="text-white  cursor-pointer font-medium rounded-lg text-sm  block w-full px-5 py-2.5 text-center  bg">Login</button>
                     </form>
                 </div>
             </div>
