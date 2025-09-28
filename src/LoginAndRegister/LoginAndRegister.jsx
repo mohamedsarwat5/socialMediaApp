@@ -1,14 +1,19 @@
 import React, { useState } from 'react'
 import axios from 'axios'
 import { Formik, useFormik } from 'formik'
-import { toast } from 'react-toastify'
+// import { toast } from 'react-toastify'
 export default function LoginAndRegister() {
     const baseUrl = import.meta.env.VITE_BASE_URL
     const [activeForm, setActiveForm] = useState('singin')
+    const [toast, setToast] = useState(false)
     const handelSignUp = (values, { resetForm }) => {
         axios.post(`${baseUrl}/users/signup`, values)
             .then((res) => {
-                toast.success('done')
+                // toast.success('done')
+                setToast(true);
+                setTimeout(() => {
+                    setToast(false);
+                }, 2000)
                 console.log(res.data.message)
                 resetForm()
                 setTimeout(() => {
@@ -48,15 +53,17 @@ export default function LoginAndRegister() {
         onSubmit: handleSignIn
     })
     return (
-        <div className='min-h-[100dvh] w-full py-12 flex  flex-col hero px-5'>
 
+        <div className='min-h-[100dvh] w-full pt-12 flex  flex-col hero px-5'>
+            <p className={`text-white flex items-center gap-x-2 transition-all duration-200 absolute left-1/2 -translate-x-1/2  w-3/12 mx-auto p-4 rounded-2xl bg font-semibold ${toast ? 'block' : 'hidden'} `}><i className='fa-solid fa-circle-check text-xl'></i> Register successfully </p>
+            <h1 className='text-4xl  font-black text-center mb-8 bg-clip-text text-transparent tracking-wider uppercase  bg-[linear-gradient(135deg,#ec4899_30%,#9333ea_100%)] '>Buzzly</h1>
             <div className='flex items-center justify-center w-full md:w-3/12 mx-auto mb-8  bg-white/10 rounded-full z-10'>
                 <button onClick={() => setActiveForm('singin')} className={`w-full rounded-full ease-in-out transition-all duration-300 ${activeForm === 'singin' ? 'bg' : 'bg-transparent'} text-white py-3 px-4 cursor-pointer`}>Sign in</button>
                 <button onClick={() => setActiveForm('register')} className={`w-full rounded-full ease-in-out transition-all duration-300 ${activeForm === 'register' ? 'bg' : 'bg-transparent'} text-white py-3 px-4 cursor-pointer`}> Register</button>
             </div>
 
             <div className='relative md:w-3/12 w-full mx-auto flex  z-10 min-h-[500px]  overflow-hidden'>
-                    {/* <h2 className='text-center mx-auto text-white text-2xl font-semibold '>{activeForm === 'singin'?"Login now":"Register now"}</h2> */}
+                {/* <h2 className='text-center mx-auto text-white text-2xl font-semibold '>{activeForm === 'singin'?"Login now":"Register now"}</h2> */}
 
                 <div className={`space-y-3.5 absolute w-full   ease-in-out transition-all duration-300 ${activeForm === 'register' ? 'translate-x-0' : 'translate-x-[150%]'}`}>
                     <form onSubmit={handleSubmit} className=" ">
