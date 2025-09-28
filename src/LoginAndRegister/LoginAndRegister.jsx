@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import axios from 'axios'
 import { Formik, useFormik } from 'formik'
 // import { toast } from 'react-toastify'
+import * as yup from "yup"
 export default function LoginAndRegister() {
     const baseUrl = import.meta.env.VITE_BASE_URL
     const [activeForm, setActiveForm] = useState('singin')
@@ -93,6 +94,7 @@ export default function LoginAndRegister() {
                                     type="radio"
                                     name="gender"
                                     value="male"
+                                    className='accent-pink-500'
                                     checked={values.gender === "male"}
                                     onChange={handleChange}
                                 />
@@ -103,6 +105,7 @@ export default function LoginAndRegister() {
                                     type="radio"
                                     name="gender"
                                     value="female"
+                                    className='accent-pink-500'
                                     checked={values.gender === "female"}
                                     onChange={handleChange}
                                 />
