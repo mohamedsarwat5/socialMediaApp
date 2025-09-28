@@ -4,6 +4,15 @@
     --gradient-bg: linear-gradient(135deg, #ec4899 0%, #9333ea 100%);
 } */
 
+@theme{
+    --color-pink:var(--pink)
+}
+
+:root{
+    --pink:#ec4899;
+    --purple:#9333ea;
+}
+
 .bg {
     background: linear-gradient(135deg, #ec4899 0%, #9333ea 100%);
 }

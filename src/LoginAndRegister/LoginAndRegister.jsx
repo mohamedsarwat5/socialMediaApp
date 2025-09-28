@@ -70,23 +70,23 @@ export default function LoginAndRegister() {
                     <form onSubmit={handleSubmit} className=" ">
                         <div className="mb-5">
                             {/* <label htmlFor="name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your name</label> */}
-                            <input onChange={handleChange} value={values.name} type="text" name='name' id="name" className="placeholder:text-white text-white bg-transparent outline-none transition-all duration-300 border border-gray-300  text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="Enter your name" required />
+                            <input onChange={handleChange} value={values.name} type="text" name='name' id="name" className="placeholder:text-white text-white bg-transparent outline-none transition-all duration-300 border border-gray-300  text-sm rounded-lg focus:ring-pink focus:border-pink block w-full p-2.5 " placeholder="Name" required />
                         </div>
                         <div className="mb-5">
                             {/* <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your name</label> */}
-                            <input onChange={handleChange} value={values.email} type="email" name='email' id="email" className="placeholder:text-white text-white bg-transparent outline-none transition-all duration-300 border border-gray-300  text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="Enter your Email" required />
+                            <input onChange={handleChange} value={values.email} type="email" name='email' id="email" className="placeholder:text-white text-white bg-transparent outline-none transition-all duration-300 border border-gray-300  text-sm rounded-lg focus:ring-pink focus:border-pink block w-full p-2.5 " placeholder="Email address" required />
                         </div>
                         <div className="mb-5">
                             {/* <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your name</label> */}
-                            <input onChange={handleChange} value={values.password} type="password" name='password' id="password" className="placeholder:text-white text-white bg-transparent outline-none transition-all duration-300 border border-gray-300  text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="Enter your password" required />
+                            <input onChange={handleChange} value={values.password} type="password" name='password' id="password" className="placeholder:text-white text-white bg-transparent outline-none transition-all duration-300 border border-gray-300  text-sm rounded-lg focus:ring-pink focus:border-pink block w-full p-2.5 " placeholder="Password" required />
                         </div>
                         <div className="mb-5">
                             {/* <label htmlFor="rePassword" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your name</label> */}
-                            <input onChange={handleChange} value={values.rePassword} type="password" name='rePassword' id="rePassword" className="placeholder:text-white text-white bg-transparent outline-none transition-all duration-300 border border-gray-300  text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="Enter your re-password" required />
+                            <input onChange={handleChange} value={values.rePassword} type="password" name='rePassword' id="rePassword" className="placeholder:text-white text-white bg-transparent outline-none transition-all duration-300 border border-gray-300  text-sm rounded-lg focus:ring-pink focus:border-pink block w-full p-2.5 " placeholder="Confirm password" required />
                         </div>
                         <div className="mb-5">
                             {/* <label htmlFor="dateOfBirth" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your name</label> */}
-                            <input onChange={handleChange} value={values.dateOfBirth} type="date" name='dateOfBirth' id="dateOfBirth" className=" border border-gray-300  text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 placeholder:text-white text-white bg-transparent outline-none transition-all duration-300" placeholder="Enter your Birthday" required />
+                            <input onChange={handleChange} value={values.dateOfBirth} type="date" name='dateOfBirth' id="dateOfBirth" className=" border border-gray-300  text-sm rounded-lg focus:ring-pink focus:border-pink block w-full p-2.5 placeholder:text-white text-white bg-transparent outline-none transition-all duration-300" placeholder="Enter your Birthday" required />
                         </div>
                         <div className="mb-5 flex itec gap-2 text-white">
                             <label className="flex items-center gap-2">
@@ -112,7 +112,7 @@ export default function LoginAndRegister() {
                                 female
                             </label>
                         </div>
-                        <button type="submit" className="text-white b font-medium rounded-lg text-sm w-full  px-5 py-2.5 text-center bg cursor-pointer">Submit</button>
+                        <button type="submit" className="text-white b font-medium rounded-lg text-sm w-full  px-5 py-2.5 text-center bg cursor-pointer">Register</button>
                     </form>
                 </div>
                 <div className={`space-y-3.5 absolute w-full  ease-in-out  transition-all duration-300 ${activeForm === 'singin' ? "translate-x-0" : '-translate-x-[150%]'}`}>
@@ -120,11 +120,11 @@ export default function LoginAndRegister() {
                     <form className=' ' onSubmit={formik.handleSubmit}>
                         <div className="mb-5">
                             {/* <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your name</label> */}
-                            <input onChange={formik.handleChange} value={formik.values.email} type="email" name='email' id="email" className="text-white border border-gray-300  text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 outline-none transition-all duration-300 block w-full p-2.5 bg-transparent placeholder:text-white" placeholder="Enter your Email" required />
+                            <input onChange={formik.handleChange} value={formik.values.email} type="email" name='email' id="email" className="text-white border border-gray-300  text-sm rounded-lg focus:ring-pink focus:border-pink outline-none transition-all duration-300 block w-full p-2.5 bg-transparent placeholder:text-white" placeholder="Email address" required />
                         </div>
                         <div className="mb-5">
                             {/* <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your name</label> */}
-                            <input onChange={formik.handleChange} value={formik.values.password} type="password" name='password' id="password" className="text-white border border-gray-300  text-sm rounded-lg focus:ring-blue-500 focus:border-[linear-gradient(135deg, #ec4899 0%, #9333ea 100%)] outline-none transition-all duration-300 block w-full p-2.5 bg-transparent placeholder:text-white " placeholder="Enter your Password" required />
+                            <input onChange={formik.handleChange} value={formik.values.password} type="password" name='password' id="password" className="text-white border border-gray-300  text-sm rounded-lg focus:ring-pink focus:border-pink outline-none transition-all duration-300 block w-full p-2.5 bg-transparent placeholder:text-white " placeholder="Password" required />
                         </div>
                         <button type="submit" className="text-white  cursor-pointer font-medium rounded-lg text-sm  block w-full px-5 py-2.5 text-center  bg">Login</button>
                     </form>
