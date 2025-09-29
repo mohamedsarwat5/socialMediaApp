@@ -1,5 +1,7 @@
 @import "tailwindcss";
-
+@plugin "flowbite-react/plugin/tailwindcss";
+@source "../.flowbite-react/class-list.json";
+@source "../node_modules/flowbite-datepicker";
 /* @theme{
     --gradient-bg: linear-gradient(135deg, #ec4899 0%, #9333ea 100%);
 } */

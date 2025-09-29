@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import axios from 'axios'
 import { Formik, useFormik } from 'formik'
 // import { toast } from 'react-toastify'
+
 import * as yup from "yup"
 export default function LoginAndRegister() {
     const baseUrl = import.meta.env.VITE_BASE_URL
@@ -41,8 +42,8 @@ export default function LoginAndRegister() {
     const handleSignIn = (values, { resetForm }) => {
         axios.post(`${baseUrl}/users/signin`, values)
             .then((res) => {
-                toast.success(res.data?.message),
-                    resetForm()
+                resetForm()
+                console.log("hello")
             })
     }
 
@@ -63,7 +64,7 @@ export default function LoginAndRegister() {
                 <button onClick={() => setActiveForm('register')} className={`w-full rounded-full ease-in-out transition-all duration-300 ${activeForm === 'register' ? 'bg' : 'bg-transparent'} text-white py-3 px-4 cursor-pointer`}> Register</button>
             </div>
 
-            <div className='relative md:w-3/12 w-full mx-auto flex  z-10 min-h-[500px]  overflow-hidden'>
+            <div className='relative md:w-3/12 w-full mx-auto flex  z-10 !min-h-[800px]  overflow-hidden'>
                 {/* <h2 className='text-center mx-auto text-white text-2xl font-semibold '>{activeForm === 'singin'?"Login now":"Register now"}</h2> */}
 
                 <div className={`space-y-3.5 absolute w-full   ease-in-out transition-all duration-300 ${activeForm === 'register' ? 'translate-x-0' : 'translate-x-[150%]'}`}>
@@ -77,16 +78,18 @@ export default function LoginAndRegister() {
                             <input onChange={handleChange} value={values.email} type="email" name='email' id="email" className="placeholder:text-white text-white bg-transparent outline-none transition-all duration-300 border border-gray-300  text-sm rounded-lg focus:ring-pink focus:border-pink block w-full p-2.5 " placeholder="Email address" required />
                         </div>
                         <div className="mb-5">
-                            {/* <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your name</label> */}
                             <input onChange={handleChange} value={values.password} type="password" name='password' id="password" className="placeholder:text-white text-white bg-transparent outline-none transition-all duration-300 border border-gray-300  text-sm rounded-lg focus:ring-pink focus:border-pink block w-full p-2.5 " placeholder="Password" required />
                         </div>
                         <div className="mb-5">
                             {/* <label htmlFor="rePassword" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your name</label> */}
                             <input onChange={handleChange} value={values.rePassword} type="password" name='rePassword' id="rePassword" className="placeholder:text-white text-white bg-transparent outline-none transition-all duration-300 border border-gray-300  text-sm rounded-lg focus:ring-pink focus:border-pink block w-full p-2.5 " placeholder="Confirm password" required />
                         </div>
-                        <div className="mb-5">
-                            {/* <label htmlFor="dateOfBirth" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your name</label> */}
-                            <input onChange={handleChange} value={values.dateOfBirth} type="date" name='dateOfBirth' id="dateOfBirth" className=" border border-gray-300  text-sm rounded-lg focus:ring-pink focus:border-pink block w-full p-2.5 placeholder:text-white text-white bg-transparent outline-none transition-all duration-300" placeholder="Enter your Birthday" required />
+                        <div className="mb-5 relative">
+                            {!values.dateOfBirth && (
+                                <span className='text-white absolute left-3 top-2 pointer-events-none md:hidden'>Date of Birth</span>
+                            )}
+                            <input onChange={handleChange} value={values.dateOfBirth} type="date" name='dateOfBirth' id="dateOfBirth" className=" border border-gray-300  text-sm rounded-lg focus:ring-pink focus:border-pink block w-full  p-2.5  text-white bg-transparent outline-none transition-all duration-300" required />
+
                         </div>
                         <div className="mb-5 flex itec gap-2 text-white">
                             <label className="flex items-center gap-2">
