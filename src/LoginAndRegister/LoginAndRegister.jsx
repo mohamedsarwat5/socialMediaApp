@@ -1,13 +1,16 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import axios from 'axios'
 import { Formik, useFormik } from 'formik'
+import { useNavigate } from 'react-router-dom'
+import { StoreContext } from '../StoreProvider'
 // import { toast } from 'react-toastify'
 
-import * as yup from "yup"
 export default function LoginAndRegister() {
+    const { Token, setToken } = useContext(StoreContext)
     const baseUrl = import.meta.env.VITE_BASE_URL
     const [activeForm, setActiveForm] = useState('singin')
     const [toast, setToast] = useState(false)
+    const navigate = useNavigate()
     const handelSignUp = (values, { resetForm }) => {
         axios.post(`${baseUrl}/users/signup`, values)
             .then((res) => {
@@ -44,6 +47,11 @@ export default function LoginAndRegister() {
             .then((res) => {
                 resetForm()
                 console.log("hello")
+                if(res.data.message==='success'){
+                    setToken(res.data.token)
+                    localStorage.setItem('token', res.data.token)
+                    navigate('/home')
+                }
             })
     }
 
@@ -64,7 +72,7 @@ export default function LoginAndRegister() {
                 <button onClick={() => setActiveForm('register')} className={`w-full rounded-full ease-in-out transition-all duration-300 ${activeForm === 'register' ? 'bg' : 'bg-transparent'} text-white py-3 px-4 cursor-pointer`}> Register</button>
             </div>
 
-            <div className='relative md:w-3/12 w-full mx-auto flex  z-10 !min-h-[800px]  overflow-hidden'>
+            <div className='relative md:w-3/12 w-full mx-auto flex  z-10 !min-h-[500px]  overflow-hidden'>
                 {/* <h2 className='text-center mx-auto text-white text-2xl font-semibold '>{activeForm === 'singin'?"Login now":"Register now"}</h2> */}
 
                 <div className={`space-y-3.5 absolute w-full   ease-in-out transition-all duration-300 ${activeForm === 'register' ? 'translate-x-0' : 'translate-x-[150%]'}`}>
