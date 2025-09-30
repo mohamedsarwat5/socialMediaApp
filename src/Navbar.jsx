@@ -16,7 +16,7 @@ export default function Navbar() {
         document.documentElement.classList.toggle('dark-mode')
         document.documentElement.classList.toggle('dark')
     }
-    const removeDark= ()=>{
+    const removeDark = () => {
         document.documentElement.classList.remove('dark-mode')
     }
     return (
@@ -36,12 +36,12 @@ export default function Navbar() {
                         <div className="font-medium truncate">name@flowbite.com</div>
                     </div>
                     <ul className="py-2 text-sm text-text-color" aria-labelledby="avatarButton">
-                        <li  className='px-4 py-2 flex justify-between items-center hover:bg-pink transition-all duration-200 ease-in-out dark:hover:text-white cursor-pointer'>
+                        <li className='px-4 py-2 flex justify-between items-center hover:bg-pink transition-all duration-200 ease-in-out dark:hover:text-white cursor-pointer'>
                             <span className="block  ">Dark mode</span>
-                                <label  className="switch">
-                                    <input onClick={handleDark} type="checkbox" />
-                                    <span className="slider" />
-                                </label>
+                            <label className="switch">
+                                <input onClick={() => (handleDark(), setOn(false))} type="checkbox" />
+                                <span className="slider" />
+                            </label>
                         </li>
                         <li>
                             <a href="#" className="block px-4 py-2 hover:hover:bg-pink transition-all duration-200 ease-in-out dark:hover:text-white cursor-pointer">Settings</a>
@@ -51,7 +51,7 @@ export default function Navbar() {
                         </li>
                     </ul>
                     <div className="py-1">
-                        <NavLink onClick={() => (logout(), removeDark())} to={'/'} className="block px-4 py-2 text-sm text-text-color hover:hover:bg-pink transition-all duration-200 ease-in-out  dark:hover:text-white cursor-pointer "><i className="fa-solid fa-arrow-right-from-bracket"></i> Sign out</NavLink>
+                        <NavLink onClick={() => (logout(), removeDark(), setOn(false))} to={'/'} className="block px-4 py-2 text-sm text-text-color hover:hover:bg-pink transition-all duration-200 ease-in-out  dark:hover:text-white cursor-pointer "><i className="fa-solid fa-arrow-right-from-bracket"></i> Sign out</NavLink>
                     </div>
                 </div>
 
