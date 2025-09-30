@@ -18,6 +18,7 @@ export default function Navbar() {
     }
     const removeDark = () => {
         document.documentElement.classList.remove('dark-mode')
+        document.documentElement.classList.remove('dark')
     }
     return (
         <div className='w-full p-4 md:px-12 bg-red-700 text-white   flex justify-between items-center'>
