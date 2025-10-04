@@ -20,8 +20,8 @@ export default function Card() {
 
     return (
 
-        isLoading ? (<Loading />) : (<div className=" max-w-md md:w-9/12  mx-auto py-5 bg-bg-hero shadow-md rounded-lg ">
-            <div className="rounded-t-lg h-48  overflow-hidden">
+        isLoading ? (<Loading />) : (<div className=" max-w-md md:w-9/12  mx-auto  bg-bg-hero shadow-md  ">
+            <div className=" h-48  overflow-hidden">
                 <img className="object-cover object-center w-full" src="https://images.unsplash.com/photo-1549880338-65ddcdfd017b?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=400&fit=max&ixid=eyJhcHBfaWQiOjE0NTg5fQ" alt="Mountain" />
             </div>
             <div className="mx-auto w-32 h-32 relative -mt-16 border-4 border-white rounded-full bg overflow-hidden">
@@ -51,9 +51,7 @@ export default function Card() {
                     <div>15</div>
                 </li>
             </ul>
-            <div className="p-4 border-t mx-8 mt-2 cursor-pointer">
-                <button className="w-1/2 block mx-auto rounded-full bg hover:shadow-lg font-semibold text-white px-6 py-2 ">Follow</button>
-            </div>
+            
         </div>)
 
 

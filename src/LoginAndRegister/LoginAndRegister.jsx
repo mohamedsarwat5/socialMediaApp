@@ -72,10 +72,10 @@ export default function LoginAndRegister() {
     })
     return (
 
-        <div className='min-h-[100dvh] w-full pt-12 flex  flex-col hero px-5'>
+        <div className='min-h-[100dvh] w-full pt-12 flex  flex-col bg-bg-hero px-5'>
             <p className={`text-white flex items-center gap-x-2 transition-all duration-200 absolute left-1/2 -translate-x-1/2 w-11/12  md:w-3/12 mx-auto p-4 rounded-2xl bg font-semibold top-8 ${toast ? 'block' : 'hidden'} `}><i className='fa-solid fa-circle-check text-xl'></i> Register successfully </p>
             <Logo className={'text-center text-4xl mb-8'} />
-            <div className='flex items-center justify-center w-full md:w-3/12 mx-auto mb-8  bg-white/40 rounded-full z-10'>
+            <div className='border border-gray-500 flex items-center justify-center w-full md:w-3/12 mx-auto mb-8  bg-white/40 rounded-full z-10'>
                 <button onClick={() => setActiveForm('singin')} className={`w-full rounded-full ease-in-out transition-all duration-300 ${activeForm === 'singin' ? 'bg text-white' : 'bg-transparent'} text-text-color py-3 px-4 cursor-pointer`}>Sign in</button>
                 <button onClick={() => setActiveForm('register')} className={`w-full rounded-full ease-in-out transition-all duration-300 ${activeForm === 'register' ? 'bg text-white' : 'bg-transparent'} text-text-color py-3 px-4 cursor-pointer`}> Register</button>
             </div>

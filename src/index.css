@@ -17,12 +17,12 @@
 :root {
   --pink: #ec4899;
   --purple: #9333ea;
-  --bg: #fff2fe;
+  --bg: #F3F4F6;
   --text:#000
 }
 
 .dark-mode {
-  --bg: #0f0f0f;
+  --bg: #131619;
   --text:#fff;
 }
 
