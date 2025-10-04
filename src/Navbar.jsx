@@ -23,6 +23,7 @@ export default function Navbar() {
     const removeDark = () => {
         document.documentElement.classList.remove('dark-mode')
         document.documentElement.classList.remove('dark')
+        setIsChecked((prev) => !prev)
     }
 
     const displayUserData = async () => {
@@ -80,8 +81,15 @@ export default function Navbar() {
 
                                 Dark mode</span>
                             <label className="switch">
-                                <input checked={isChecked}
-                                    onChange={(e) => setIsChecked(e.target.checked)} type="checkbox" />
+                                <input
+                                    type="checkbox"
+                                    checked={isChecked}
+                                    onChange={(e) => {
+                                        setIsChecked(e.target.checked);
+                                        handleDark();
+                                        setOn(false); 
+                                    }}
+                                />
                                 <span className="slider" />
                             </label>
                         </li>
