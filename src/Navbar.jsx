@@ -40,7 +40,7 @@ export default function Navbar() {
 
     return (
         <div className='w-full p-4 md:px-12 bg-bg-hero border-b border-gray-400 dark:border-gray-400 text-white z-50  flex justify-between items-center'>
-            <Logo className={'text-3xl'} />
+            <Logo className={'text-3xl bg-clip-text text-transparent bg-[linear-gradient(135deg,#ec4899_30%,#9333ea_100%)]'} />
 
             {/* <div className='space-x-5 hidden md:block text-text-color'>
                 <NavLink to={'/home'}><i className="fa-regular fa-house"></i> Home</NavLink>
@@ -87,7 +87,7 @@ export default function Navbar() {
                                     onChange={(e) => {
                                         setIsChecked(e.target.checked);
                                         handleDark();
-                                        setOn(false); 
+                                        setOn(false);
                                     }}
                                 />
                                 <span className="slider" />
