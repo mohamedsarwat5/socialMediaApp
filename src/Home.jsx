@@ -64,7 +64,7 @@ export default function Home() {
                                 </div>
 
                                 {/* Body */}
-                                <div className="ml-4 mt-2 mb-4 space-y-1">
+                                <div className="mx-4 mt-2 mb-4 space-y-1">
                                     <p className="font-bold text-gray-800 dark:text-gray-100">{post.user.name}</p>
                                     <p dir='auto' className="text-gray-700 dark:text-gray-400">{post.body}</p>
                                 </div>
@@ -72,7 +72,7 @@ export default function Home() {
                         ) : (
                             <>
                                 {/* Body الأول */}
-                                <div className="ml-4 mt-2 mb-4 space-y-1">
+                                <div className="mx-4 mt-2 mb-4 space-y-1">
                                     <p className="font-bold text-gray-800">{post.title}</p>
                                     <p dir='auto' className="text-gray-700 dark:text-gray-400">{post.body}</p>
                                 </div>
