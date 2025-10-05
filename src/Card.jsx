@@ -1,12 +1,17 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import { StoreContext } from './StoreProvider'
 import Loading from './Loading'
+import { NavLink } from 'react-router-dom'
+import axios from 'axios'
 
 export default function Card() {
 
+    const baseUrl = import.meta.env.VITE_BASE_URL
     const { getUserData } = useContext(StoreContext)
     const [userData, setUserData] = useState()
+    const [isModalOpen, setIsModalOpen] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
+
     const displayUserData = async () => {
         setIsLoading(true)
         const response = await getUserData()
@@ -14,19 +19,56 @@ export default function Card() {
         setUserData(response.data.user)
         setIsLoading(false)
     }
+
+    const inputRefImage = useRef()
+    const changePhoto = (src) => {
+        if (src) {
+            const formData = new FormData()
+            formData.append('photo', src)
+            axios.put(`${baseUrl}/users/upload-photo`, formData, {
+                headers: {
+                    token: localStorage.getItem('token')
+                }
+            }).then(res => {
+                console.log(res)
+                getUserData()
+                displayUserData()
+            })
+        }
+    }
     useEffect(() => {
         displayUserData()
     }, [])
 
     return (
 
-        isLoading ? (<Loading />) : (<div className=" max-w-md md:w-9/12  mx-auto  bg-bg-hero shadow-md  ">
-            <div className=" h-48  overflow-hidden">
-                <img className="object-cover object-center w-full" src="https://images.unsplash.com/photo-1549880338-65ddcdfd017b?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=400&fit=max&ixid=eyJhcHBfaWQiOjE0NTg5fQ" alt="Mountain" />
+        isLoading ? (<Loading />) : (<div className="  md:w-12/12  mx-auto  bg-bg-hero relative min-h-screen ">
+            {isModalOpen && (<div className=' absolute inset-0 bg-black/80 z-[9999999]'>
+                <div className=' flex items-center justify-center min-h-screen relative '>
+                    <button onClick={()=>setIsModalOpen(false)} className='bg-bg-hero w-10 h-10 absolute end-3 top-3 rounded-full cursor-pointer'>
+                        <i className="fa-solid fa-xmark  text-black dark:text-white "></i>
+                    </button>
+                    <img src={userData?.photo} className='md:w-5/12' alt="" />
+                </div>
+            </div>)}
+
+            <NavLink to={'/home'} className={'absolute left-4 top-4 z-10  bg-bg-hero w-10 h-10 flex items-center justify-center rounded-full'}>
+                <i className="fa-solid fa-arrow-left text-black dark:text-white"></i>
+            </NavLink>
+            <div className=" h-48 md:h-[300px]  overflow-hidden">
+                <img className=" object-bottom object-cover w-full" src="https://images.unsplash.com/photo-1549880338-65ddcdfd017b?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=400&fit=max&ixid=eyJhcHBfaWQiOjE0NTg5fQ" alt="Mountain" />
             </div>
-            <div className="mx-auto w-32 h-32 relative -mt-16 border-4 border-white rounded-full bg overflow-hidden">
-                <img className="object-cover object-center h-32" src={userData?.photo} alt={userData?.name} />
+            <div className='relative w-fit mx-auto'>
+                <button onClick={() => inputRefImage.current.click()} className='absolute md:bottom-4 md:end-4 cursor-pointer shadow-md bottom-2 end-2 rounded-full w-12 h-12 bg-bg-hero flex items-center justify-center z-50 '>
+                    <i className="fa-solid fa-camera text-black dark:text-white text-2xl"></i>
+                </button>
+
+                <div className="mx-auto w-40 h-40 lg:w-60 lg:h-60 lg:-mt-32 relative -mt-20 border-4 border-white dark:border-black rounded-full bg overflow-hidden">
+                    <img onClick={()=>setIsModalOpen(true)} className="object-cover object-center " src={userData?.photo} alt={userData?.name} />
+                    <input onChange={(e) => changePhoto(e.target.files[0])} type="file" className='hidden' ref={inputRefImage} accept='image/*' />
+                </div>
             </div>
+
             <div className="text-center mt-2">
                 <h2 className="font-semibold capitalize text-2xl text-text-color">{userData?.name}</h2>
                 <p className="text-gray-500 dark:text-gray-300 capitalize">welcome to my profile</p>
@@ -51,7 +93,7 @@ export default function Card() {
                     <div>15</div>
                 </li>
             </ul>
-            
+
         </div>)
 
 
