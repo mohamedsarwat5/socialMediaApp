@@ -131,7 +131,7 @@ export default function Stories() {
                                 alt={activeStory.user}
                                 className="w-8 h-8 rounded-full border border-white"
                             />
-                            <span className="text-white text-sm font-semibold">
+                            <span className="text-white text-md font-semibold">
                                 {activeStory.user}
                             </span>
                         </div>
