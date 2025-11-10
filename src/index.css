@@ -33,6 +33,18 @@
   background: linear-gradient(135deg, #ec489ac1 0%, #9233ea98 100%);
 }
 
+/* إخفاء شريط التمرير الأفقي فقط */
+.hide-scrollbar-x::-webkit-scrollbar {
+  height: 0px; /* فقط شريط التمرير الأفقي */
+}
+
+.hide-scrollbar-x {
+  -ms-overflow-style: none;  /* IE & Edge */
+  scrollbar-width: none;     /* Firefox */
+}
+
+
+
 /* .hero-bg {
     background:
         linear-gradient(135deg, #0f0f0f 0%, #1a0f1f 100%);

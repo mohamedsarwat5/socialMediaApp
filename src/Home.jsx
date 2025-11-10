@@ -3,6 +3,7 @@ import { StoreContext } from './StoreProvider'
 import Loading from './Loading'
 import Navbar from './Navbar'
 import profile from '../public/user.png'
+import Stories from './Stories'
 
 
 export default function Home() {
@@ -11,6 +12,19 @@ export default function Home() {
     const [allPosts, setAllPosts] = useState(null)
     const [isLoading, setIsLoading] = useState(false)
     const [userData, setUserData] = useState(null)
+    const [likedPosts, setLikedPosts] = useState(
+        JSON.parse(localStorage.getItem("likedPosts")) || []
+    );
+    const toggleLike = (id) => {
+        let updated;
+        if (likedPosts.includes(id)) {
+            updated = likedPosts.filter((postId) => postId !== id);
+        } else {
+            updated = [...likedPosts, id];
+        }
+        setLikedPosts(updated);
+        localStorage.setItem("likedPosts", JSON.stringify(updated));
+    };
 
     const displayPosts = async () => {
         setIsLoading(true)
@@ -24,7 +38,6 @@ export default function Home() {
     }
     useEffect(() => {
         displayPosts()
-
     }, [])
     const displayUserData = async () => {
         setIsLoading(true)
@@ -37,20 +50,34 @@ export default function Home() {
         displayUserData()
     }, [])
 
+    function formatDateTime(dateString) {
+        const date = new Date(dateString);
+        const formattedDate = date.toLocaleDateString('en-US'); // النتيجة: 05/10/2025
+        const formattedTime = date.toLocaleTimeString('en-US', {
+            hour: '2-digit',
+            minute: '2-digit',
+            hour12: true
+        });
+        return `${formattedDate} ${formattedTime}`;
+    }
+
     return (
 
         isLoading ? (<Loading />) : (<>
-            <Navbar />
-
+                <Navbar />
             <div className='bg-bg-hero  min-h-screen flex flex-col p-4 items-center gap-3'>
-                <div className='bg-white dark:bg-gray-950 h-16  max-w-md mx-auto w-full rounded-lg p-4 flex  items-center cursor-pointer'>
+            <div className='max-w-lg w-full overflow-x-auto  hide-scrollbar-x'>
+                <Stories />
+            </div>
+
+                <div className='bg-white dark:bg-gray-950 h-16  max-w-lg mx-auto w-full rounded-lg p-4 flex  items-center cursor-pointer'>
                     <img className='w-10 h-10 rounded-full cursor-pointer object-cover object-top mr-3' src={userData?.photo ? userData.photo : profile} alt="" />
                     <p className='text-gray-500 flex-1'>what's on your mind?</p>
-                   <i className="fa-solid fa-image text-green-500 fa-lg cursor-pointer" />
+                    <i className="fa-solid fa-image text-green-500 fa-lg cursor-pointer" />
 
                 </div>
-                {allPosts?.slice(4).map((post, i) => (
-                    <div key={i} className="container md:w-md  bg-white dark:bg-gray-950 rounded-xl shadow-md">
+                {allPosts?.slice().map((post, i) => (
+                    <div key={i} className="container md:w-lg  bg-white dark:bg-gray-950 rounded-xl shadow-md">
 
                         {/* Profile */}
                         <div className=" p-4 ">
@@ -63,7 +90,7 @@ export default function Home() {
                                 <div>
                                     <h2 className="text-gray-800 dark:text-gray-100 font-bold capitalize">{post.user.name}</h2>
                                     <p className="text-gray-500 dark:text-gray-400 text-xs">
-                                        {new Date(post.createdAt).toLocaleString()}</p>
+                                        {formatDateTime(post.createdAt)}</p>
                                 </div>
 
                             </div>
@@ -82,8 +109,9 @@ export default function Home() {
                                 {/* Icons بعد الصورة */}
                                 <div className="ml-4 mt-3 mb-4 flex space-x-2">
                                     <div className="flex space-x-1 items-center">
-                                        <i className="fa-solid fa-heart text-red-500 text-xl"></i>
-                                        <span>{ }</span>
+                                        <button onClick={() => toggleLike(post._id)} className=''>
+                                            <i className={` fa-heart  cursor-pointer text-xl ${likedPosts.includes(post._id) ? "text-red-500 fa-solid" : " fa-regular"}`}></i>
+                                        </button>
                                     </div>
                                     <div className="flex space-x-1 items-center">
                                         <i className="fa-regular fa-comment-dots dark:text-gray-100  text-xl"></i>
@@ -107,10 +135,9 @@ export default function Home() {
 
                                 {/* Icons بعد البودي */}
                                 <div className="ml-4 mt-2 mb-4 flex space-x-2">
-                                    <div className="flex space-x-1 items-center">
-                                        <i className="fa-solid fa-heart text-red-500 text-xl"></i>
-                                        <span>{ }</span>
-                                    </div>
+                                    <button onClick={() => toggleLike(post._id)}>
+                                        <i className={` fa-heart  cursor-pointer text-xl ${likedPosts.includes(post._id) ? "text-red-500 fa-solid" : " fa-regular"}`}></i>
+                                    </button>
                                     <div className="flex space-x-1 items-center">
                                         <i className="fa-regular fa-comment-dots dark:text-gray-100 text-xl"></i>
                                         <span>{ }</span>
