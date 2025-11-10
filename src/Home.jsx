@@ -66,16 +66,17 @@ export default function Home() {
         isLoading ? (<Loading />) : (<>
                 <Navbar />
             <div className='bg-bg-hero  min-h-screen flex flex-col p-4 items-center gap-3'>
-            <div className='max-w-lg w-full overflow-x-auto  hide-scrollbar-x'>
-                <Stories />
-            </div>
+
 
                 <div className='bg-white dark:bg-gray-950 h-16  max-w-lg mx-auto w-full rounded-lg p-4 flex  items-center cursor-pointer'>
                     <img className='w-10 h-10 rounded-full cursor-pointer object-cover object-top mr-3' src={userData?.photo ? userData.photo : profile} alt="" />
                     <p className='text-gray-500 flex-1'>what's on your mind?</p>
                     <i className="fa-solid fa-image text-green-500 fa-lg cursor-pointer" />
-
                 </div>
+
+                <div className='max-w-lg w-full overflow-x-auto  hide-scrollbar-x'>
+                <Stories />
+            </div>
                 {allPosts?.slice().map((post, i) => (
                     <div key={i} className="container md:w-lg  bg-white dark:bg-gray-950 rounded-xl shadow-md">
 
