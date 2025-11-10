@@ -51,7 +51,7 @@ export default function Navbar() {
                 <div onClick={handleMenu} className='border border-text-color rounded-full p-1'>
                     <img className="w-10 h-10 rounded-full cursor-pointer object-cover object-top" src={userData?.photo ? userData.photo : profile} alt=" "></img>
                 </div>
-                <div className={` ${on ? 'opacity-100' : "opacity-0"} z-20 transition-all duration-300 ease-in-out  absolute right-0 top-12 bg-white dark:bg-black divide-y dark:divide-gray-100 divide-gray-950 rounded-lg shadow-sm w-48 `}>
+                <div className={` ${on ? 'opacity-100 z-20' : "opacity-0 z-0"}  transition-all duration-300 ease-in-out  absolute right-0 top-12 bg-white dark:bg-black divide-y dark:divide-gray-100 divide-gray-950 rounded-lg shadow-sm w-48 `}>
                     <div className="px-4 py-3 text-sm text-text-color ">
                         <div>{userData?.name}</div>
                         <div className="font-medium truncate">{userData?.email}</div>
