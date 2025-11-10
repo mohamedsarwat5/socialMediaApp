@@ -33,14 +33,15 @@
   background: linear-gradient(135deg, #ec489ac1 0%, #9233ea98 100%);
 }
 
-/* إخفاء شريط التمرير الأفقي فقط */
-.hide-scrollbar-x::-webkit-scrollbar {
-  height: 0px; /* فقط شريط التمرير الأفقي */
+/* إخفاء scrollbar مع السماح بالتمرير باللمس */
+.hide-scrollbar-x {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch; /* للسلاسة على iOS */
+  scrollbar-width: none; /* Firefox */
 }
 
-.hide-scrollbar-x {
-  -ms-overflow-style: none;  /* IE & Edge */
-  scrollbar-width: none;     /* Firefox */
+.hide-scrollbar-x::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Edge */
 }
 
 
