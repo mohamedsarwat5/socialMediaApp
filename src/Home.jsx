@@ -1,10 +1,12 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import { StoreContext } from './StoreProvider'
 import Loading from './Loading'
 import Navbar from './Navbar'
 import profile from '../public/user.png'
 import Stories from './Stories'
 import { Link } from 'react-router-dom'
+import axios from 'axios'
+import { jwtDecode } from 'jwt-decode'
 
 
 export default function Home() {
@@ -30,7 +32,6 @@ export default function Home() {
     const displayPosts = async () => {
         setIsLoading(true)
         let response = await getallPosts()
-        console.log(response)
         const sortedPosts = response.data.posts.sort(
             (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
         )
@@ -40,10 +41,11 @@ export default function Home() {
     useEffect(() => {
         displayPosts()
     }, [])
+
     const displayUserData = async () => {
         setIsLoading(true)
         const response = await getUserData()
-        console.log(response)
+        // console.log(response)
         setUserData(response.data.user)
         setIsLoading(false)
     }
@@ -61,22 +63,58 @@ export default function Home() {
         });
         return `${formattedDate} ${formattedTime}`;
     }
+
+
     const baseUrl = import.meta.env.VITE_BASE_URL
     const [openModal, setOpenModal] = useState(false)
     const handleOpenModal = () => setOpenModal(prev => !prev)
+    const textRef = useRef(null)
+    const imgRef = useRef()
+    const token = localStorage.getItem('token');
+    const decode = jwtDecode(token)
+    console.log(decode)
+    const createPost = (e) => {
+        e.preventDefault();
+        const token = localStorage.getItem('token');
+
+        const formData = new FormData();
+
+        if (imgRef.current?.files?.[0]) {
+            formData.append("image", imgRef.current.files[0]);
+        }
+        if (textRef.current?.value) {
+            formData.append("body", textRef.current.value);
+        }
+
+        axios.post(`${baseUrl}/posts`, formData, {
+            headers: {
+                token: localStorage.getItem('token'),
+                'Content-Type': 'multipart/form-data'
+            }
+        })
+            .then((res) => {
+                textRef.current.value = "";
+                setOpenModal(false);
+                displayPosts();
+            })
+            .catch((err) => {
+                console.error(err);
+            });
+    };
+
 
     return (
 
         isLoading ? (<Loading />) : (<>
             <Navbar />
             <div className='bg-bg-hero  min-h-screen flex flex-col p-4 items-center gap-3'
-            onClick={(e) => e.stopPropagation()}>
+                onClick={(e) => e.stopPropagation()}>
 
 
                 <div className='bg-white dark:bg-gray-950 h-16  max-w-lg mx-auto w-full rounded-lg p-4 flex z-40 items-center cursor-pointer'>
                     <Link to={`profile`}> <img className='w-10 h-10 rounded-full cursor-pointer object-cover object-top mr-3' src={userData?.photo ? userData.photo : profile} alt="" /></Link>
                     <p onClick={handleOpenModal} className='text-gray-500 flex-1'>what's on your mind?</p>
-                    <button onClick={()=>handleOpenModal(true)}><i className="fa-solid fa-image text-green-500 fa-lg cursor-pointer" /></button>
+                    <button onClick={() => handleOpenModal(true)}><i className="fa-solid fa-image text-green-500 fa-lg cursor-pointer" /></button>
                 </div>
 
                 <div className={`${openModal ? "flex z-50 " : "hidden z-0"} z-50  justify-center fixed inset-0 bg-black/80 transition-all duration-200`}>
@@ -89,15 +127,16 @@ export default function Home() {
                         <div className='userData flex items-center mb-2'>
                             <img className='w-10 h-10 rounded-full cursor-pointer object-cover object-top mr-3' src={userData?.photo ? userData.photo : profile} alt="" />
                             <h2 className='text-text-color flex-1'>{userData?.name}</h2>
-                             <div className=' p-3 text-xl  rounded-lg  flex items-center justify-center w-fit'>
+                            <button onClick={() => imgRef.current.click()} className=' p-3 text-xl  rounded-lg  flex items-center justify-center w-fit'>
                                 <i className='fa-solid fa-image cursor-pointer text-green-500'></i>
-                            </div>
+                            </button>
+                            <input ref={imgRef} type="file" accept='image/*' className='hidden' />
                         </div>
 
-                        <form action="" className=''>
-                            <textarea name="" className=' w-full h-[200px] resize-none outline-none text-text-color' placeholder="Write something...."></textarea>
+                        <form className=''>
+                            <textarea ref={textRef} className=' w-full h-[200px] resize-none outline-none text-text-color' placeholder="Write something...."></textarea>
 
-                            <button className=' w-full bg text-white rounded-md p-2 cursor-pointer '>Post</button>
+                            <button onClick={(e) => createPost(e)} className=' w-full bg text-white rounded-md p-2 cursor-pointer '>Post</button>
                         </form>
                     </div>
                 </div>
@@ -105,7 +144,7 @@ export default function Home() {
                 <div className='max-w-lg w-full overflow-x-auto  hide-scrollbar-x'>
                     <Stories />
                 </div>
-                {allPosts?.slice().map((post, i) => (
+                {allPosts?.map((post, i) => (
                     <div key={i} className="container md:w-lg  bg-white dark:bg-gray-950 rounded-xl shadow-md">
 
                         {/* Profile */}
@@ -139,7 +178,7 @@ export default function Home() {
                                 <div className="ml-4 mt-3 mb-4 flex space-x-2">
                                     <div className="flex space-x-1 items-center">
                                         <button onClick={() => toggleLike(post._id)} className=''>
-                                            <i className={` fa-heart  cursor-pointer text-xl ${likedPosts.includes(post._id) ? "text-red-500 fa-solid" : " fa-regular"}`}></i>
+                                            <i className={` fa-heart  cursor-pointer text-xl ${likedPosts.includes(post._id) ? "text-red-500 fa-solid" : " fa-regular text-text-color"}`}></i>
                                         </button>
                                     </div>
                                     <div className="flex space-x-1 items-center">
@@ -165,7 +204,7 @@ export default function Home() {
                                 {/* Icons بعد البودي */}
                                 <div className="ml-4 mt-2 mb-4 flex space-x-2">
                                     <button onClick={() => toggleLike(post._id)}>
-                                        <i className={` fa-heart  cursor-pointer text-xl ${likedPosts.includes(post._id) ? "text-red-500 fa-solid" : " fa-regular"}`}></i>
+                                        <i className={` fa-heart  cursor-pointer text-xl ${likedPosts.includes(post._id) ? "text-red-500 fa-solid" : " fa-regular text-text-color"}`}></i>
                                     </button>
                                     <div className="flex space-x-1 items-center">
                                         <i className="fa-regular fa-comment-dots dark:text-gray-100 text-xl"></i>
