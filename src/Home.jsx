@@ -73,7 +73,7 @@ export default function Home() {
             onClick={(e) => e.stopPropagation()}>
 
 
-                <div className='bg-white dark:bg-gray-950 h-16  max-w-lg mx-auto w-full rounded-lg p-4 flex z-50 items-center cursor-pointer'>
+                <div className='bg-white dark:bg-gray-950 h-16  max-w-lg mx-auto w-full rounded-lg p-4 flex z-40 items-center cursor-pointer'>
                     <Link to={`profile`}> <img className='w-10 h-10 rounded-full cursor-pointer object-cover object-top mr-3' src={userData?.photo ? userData.photo : profile} alt="" /></Link>
                     <p onClick={handleOpenModal} className='text-gray-500 flex-1'>what's on your mind?</p>
                     <button onClick={()=>handleOpenModal(true)}><i className="fa-solid fa-image text-green-500 fa-lg cursor-pointer" /></button>

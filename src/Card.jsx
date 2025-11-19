@@ -48,7 +48,7 @@ export default function Card() {
                     <button onClick={() => setIsModalOpen(false)} className='bg-bg-hero w-10 h-10 absolute end-3 top-3 rounded-full cursor-pointer'>
                         <i className="fa-solid fa-xmark  text-black dark:text-white "></i>
                     </button>
-                    <img src={userData?.photo} className='md:w-5/12' alt="" />
+                    <img loading='lazy' src={userData?.photo} className='md:w-5/12' alt="" />
                 </div>
             </div>)}
 
@@ -56,7 +56,7 @@ export default function Card() {
                 <i className="fa-solid fa-arrow-left text-black dark:text-white"></i>
             </NavLink>
             <div className=" h-48 md:h-[300px]  overflow-hidden">
-                <img className=" object-bottom object-cover w-full" src="https://images.unsplash.com/photo-1549880338-65ddcdfd017b?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=400&fit=max&ixid=eyJhcHBfaWQiOjE0NTg5fQ" alt="Mountain" />
+                <img loading='lazy' className=" object-bottom object-cover w-full" src="https://images.unsplash.com/photo-1549880338-65ddcdfd017b?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=400&fit=max&ixid=eyJhcHBfaWQiOjE0NTg5fQ" alt="Mountain" />
             </div>
             <div className='relative w-fit mx-auto'>
                 <button onClick={() => inputRefImage.current.click()} className='absolute md:bottom-4 md:end-4 cursor-pointer shadow-md bottom-2 end-2 rounded-full w-12 h-12 bg-bg-hero flex items-center justify-center z-50 '>
@@ -64,7 +64,7 @@ export default function Card() {
                 </button>
 
                 <div className="mx-auto w-40 h-40 lg:w-60 lg:h-60 lg:-mt-32 relative -mt-20 border-4 border-white dark:border-black rounded-full bg overflow-hidden">
-                    <img onClick={() => setIsModalOpen(true)} className="object-cover object-center " src={userData?.photo} alt={userData?.name} />
+                    <img loading='lazy' onClick={() => setIsModalOpen(true)} className="object-cover object-center " src={userData?.photo} alt={userData?.name} />
                     <input onChange={(e) => changePhoto(e.target.files[0])} type="file" className='hidden' ref={inputRefImage} accept='image/*' />
                 </div>
             </div>

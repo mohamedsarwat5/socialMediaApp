@@ -93,14 +93,14 @@ export default function Stories() {
             {stories.map((story) => (
                 <div key={story.id} className="cursor-pointer shrink-0 relative">
                     <div className="absolute top-3 left-3 flex items-center gap-2 z-10">
-                        <img
+                        <img loading='lazy'
                             src={story.avatar}
                             alt={story.user}
                             className="w-8 h-8 rounded-full border border-white"
                         />
 
                     </div>
-                    <img
+                    <img loading='lazy'
                         src={story.image}
                         alt={story.user}
                         className="w-32 h-48 object-cover rounded-lg"
@@ -126,7 +126,7 @@ export default function Stories() {
 
                         {/* User info */}
                         <div className="absolute top-3 left-3 flex items-center gap-2 z-10">
-                            <img
+                            <img loading='lazy'
                                 src={activeStory.avatar}
                                 alt={activeStory.user}
                                 className="w-8 h-8 rounded-full border border-white"
@@ -137,7 +137,7 @@ export default function Stories() {
                         </div>
 
                         {/* Story image */}
-                        <img
+                        <img loading='lazy'
                             src={activeStory.image}
                             alt={activeStory.user}
                             className="w-full h-full object-cover"
