@@ -42,7 +42,7 @@ export default function Card() {
 
     return (
 
-        isLoading ? (<Loading />) : (<div className="  md:w-12/12  mx-auto  bg-bg-hero relative  ">
+        isLoading ? (<Loading />) : (<div className="  md:w-12/12  mx-auto  bg-bg-hero relative mb-4  ">
             {isModalOpen && (<div className=' absolute inset-0 bg-black/80 z-[9999999]'>
                 <div className=' flex items-center justify-center min-h-screen relative '>
                     <button onClick={() => setIsModalOpen(false)} className='bg-bg-hero w-10 h-10 absolute end-3 top-3 rounded-full cursor-pointer'>
