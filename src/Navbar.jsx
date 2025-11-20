@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import { StoreContext } from './StoreProvider'
 import Logo from './Logo'
-import profile from '../public/user.png'
+import profile from '/user.png'
 export default function Navbar() {
     const { setToken, getUserData } = useContext(StoreContext)
     const [userData, setUserData] = useState(null)
