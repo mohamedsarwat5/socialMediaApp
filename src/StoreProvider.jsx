@@ -23,7 +23,7 @@ export default function StoreProvider({ children }) {
             .then((response) => response)
     }
     const getallPosts = () => {
-        return axios.get(`${baseUrl}/posts?limit=50`, { headers: { token } })
+        return axios.get(`${baseUrl}/posts?limit=50&sort=-createdAt`, { headers: { token } })
             .then((response) => response)
     }
 

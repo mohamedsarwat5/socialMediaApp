@@ -34,10 +34,11 @@ export default function Home() {
         let response = await getallPosts()
         const sortedPosts = response.data.posts.sort(
             (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
-        )
+        ).slice(0, 50)
         setAllPosts(sortedPosts)
         setIsLoading(false)
     }
+    
     useEffect(() => {
         displayPosts()
     }, [])
@@ -73,6 +74,8 @@ export default function Home() {
     const token = localStorage.getItem('token');
     const decode = jwtDecode(token)
     console.log(decode)
+
+
     const createPost = (e) => {
         e.preventDefault();
         const token = localStorage.getItem('token');
@@ -95,6 +98,7 @@ export default function Home() {
             .then((res) => {
                 textRef.current.value = "";
                 setOpenModal(false);
+                setAllPosts(prev => [res.data.post, ...prev])
                 displayPosts();
             })
             .catch((err) => {
