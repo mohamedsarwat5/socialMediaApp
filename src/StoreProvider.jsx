@@ -102,6 +102,13 @@ export default function StoreProvider({ children }) {
         setIsLoading(false);
     };
 
+
+    const getPostComments = () => {
+
+    }
+
+
+
     function formatDateTime(dateString) {
         const date = new Date(dateString);
         const formattedDate = date.toLocaleDateString('en-US');
@@ -129,7 +136,7 @@ export default function StoreProvider({ children }) {
     };
 
     return (
-        <StoreContext.Provider value={{ token, setToken, getUserData, getallPosts, errorMsg, createPost, imgRef, textRef, openModal, setOpenModal, allPosts, formatDateTime, setAllPosts, displayPosts, setIsLoading, isLoading, displayUserData, userData, setUserData, likedPosts, setLikedPosts }}>
+        <StoreContext.Provider value={{ token, setToken, getUserData, getallPosts, errorMsg, createPost, imgRef, textRef, openModal, setOpenModal, allPosts, formatDateTime, setAllPosts, displayPosts, setIsLoading, isLoading, displayUserData, userData, setUserData, likedPosts, setLikedPosts,toggleLike }}>
             {children}
         </StoreContext.Provider>
     )

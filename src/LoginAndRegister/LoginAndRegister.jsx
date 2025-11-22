@@ -1,16 +1,16 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import axios from 'axios'
 import { Formik, useFormik } from 'formik'
 import { useNavigate } from 'react-router-dom'
 import { StoreContext } from '../StoreProvider'
 import Logo from '../Logo'
-// import { toast } from 'react-toastify'
+import { toast } from 'react-toastify'
 
 export default function LoginAndRegister() {
     const { Token, setToken } = useContext(StoreContext)
     const baseUrl = import.meta.env.VITE_BASE_URL
     const [activeForm, setActiveForm] = useState('singin')
-    const [toast, setToast] = useState(false)
+    const [tooast, setTooast] = useState(false)
     const navigate = useNavigate()
     const [isLoading, setIsLoading] = useState(false)
     const handelSignUp = (values, { resetForm }) => {
@@ -18,9 +18,9 @@ export default function LoginAndRegister() {
         axios.post(`${baseUrl}/users/signup`, values)
             .then((res) => {
                 // toast.success('done')
-                setToast(true);
+                setTooast(true);
                 setTimeout(() => {
-                    setToast(false);
+                    setTooast(false);
                 }, 2000)
                 console.log(res.data.message)
                 resetForm()
@@ -58,10 +58,22 @@ export default function LoginAndRegister() {
                     localStorage.setItem('token', res.data.token)
                     navigate('/home')
                 }
-            }).finally(() => {
+            }).catch((err) => {
+                toast.error(err.response?.data.error)
+            })
+            .finally(() => {
                 setIsLoading(false)
             })
     }
+
+    const routing = () => {
+        if (localStorage.getItem('token')) {
+            navigate('/home')
+        }
+    }
+    useEffect(() => {
+        routing()
+    }, [])
 
     const formik = useFormik({
         initialValues: {
@@ -73,7 +85,7 @@ export default function LoginAndRegister() {
     return (
 
         <div className='min-h-[100dvh] w-full pt-12 flex  flex-col bg-bg-hero px-5'>
-            <p className={`text-white flex items-center gap-x-2 transition-all duration-200 absolute left-1/2 -translate-x-1/2 w-11/12  md:w-3/12 mx-auto p-4 rounded-2xl bg font-semibold top-8 ${toast ? 'block' : 'hidden'} `}><i className='fa-solid fa-circle-check text-xl'></i> Register successfully </p>
+            <p className={`text-white flex items-center gap-x-2 transition-all duration-200 absolute left-1/2 -translate-x-1/2 w-11/12  md:w-3/12 mx-auto p-4 rounded-2xl bg font-semibold top-8 ${tooast ? 'block' : 'hidden'} `}><i className='fa-solid fa-circle-check text-xl'></i> Register successfully </p>
             <Logo className={'text-center text-4xl mb-8 bg-clip-text text-transparent bg-[linear-gradient(135deg,#ec4899_30%,#9333ea_100%)]'} />
             <div className='border border-gray-500 flex items-center justify-center w-full md:w-3/12 mx-auto mb-8  bg-white/40 rounded-full z-10'>
                 <button onClick={() => setActiveForm('singin')} className={`w-full rounded-full ease-in-out transition-all duration-300 ${activeForm === 'singin' ? 'bg text-white' : 'bg-transparent'} text-text-color py-3 px-4 cursor-pointer`}>Sign in</button>

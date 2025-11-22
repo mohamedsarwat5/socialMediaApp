@@ -21,6 +21,7 @@ export default function Home() {
     const handleOpen = (postId) => {
         setOpenMenu(id => id === postId ? null : postId)
     }
+    const [openPhotoModal, setOpenPhotoModal] = useState(false);
 
     return isLoading ? (
         <Loading />
@@ -123,8 +124,10 @@ export default function Home() {
 
                 {/* Posts */}
                 {allPosts?.map((post, i) => (
-                    <div key={i} className="container md:w-lg  mx-auto pb-1 mb-4 bg-white dark:bg-gray-950 rounded-xl shadow-md">
+                    <div key={i} className="relative overflow-hidden container md:w-lg  mx-auto pb-1 mb-4 bg-white dark:bg-gray-950 rounded-xl shadow-md">
+                        {/* <div className='absolute inset-0 bg-text-color z-30'></div> */}
                         {/* Profile */}
+
                         <div className=" p-4 relative">
                             <button onClick={() => handleOpen(post._id)} className='absolute top-3 right-4 cursor-pointer text-text-color'>
                                 <i className="fa-solid fa-ellipsis"></i>
@@ -157,17 +160,27 @@ export default function Home() {
                         {post.image ? (
                             <>
                                 <img
-                                    className="w-full"
+                                    // onClick={() => setOpenPhotoModal(true)}
+                                    className="w-full object-cover max-h-[400px]"
                                     src={post.image}
                                     alt="post"
                                 />
+                                {/* {openPhotoModal && (
+                                    <div className='fixed inset-0 bg-bg-hero flex items-center justify-center'>
+                                        <button onClick={() => setOpenPhotoModal(false)} className='absolute left-3 top-3 text-text-color'>
+                                            <i className="fa-solid fa-xmark text-2xl"></i>
+                                        </button>
+                                        <img src={post.image} />
+                                    </div>
+                                )} */}
 
                                 {/* Icons بعد الصورة */}
                                 <div className="ml-4 mt-3 mb-4 flex space-x-2">
                                     <div className="flex space-x-1 items-center">
                                         <button onClick={() => toggleLike(post._id)} className=''>
-                                            <i className={` fa-heart  cursor-pointer text-xl ${likedPosts.includes(post._id) ? "text-red-500 fa-solid" : " fa-regular text-text-color"}`}></i>
+                                            <i className={` fa-heart mt-1 cursor-pointer text-xl ${likedPosts.includes(post._id) ? "text-red-500 fa-solid" : " fa-regular text-text-color"}`}></i>
                                         </button>
+                                        {/* {likedPosts.includes(post._id)? <span>Loved</span> :  <span>Love</span>} */}
                                     </div>
                                     <div className="flex space-x-1 items-center">
                                         <i className="fa-regular fa-comment-dots dark:text-gray-100  text-xl"></i>
@@ -177,7 +190,7 @@ export default function Home() {
 
                                 {/* Body */}
                                 <div className="mx-4 mt-2 mb-4 space-y-1">
-                                    <p className="font-bold text-gray-800 dark:text-gray-100">{post.user.name}</p>
+                                    <p className="font-bold text-gray-800 dark:text-gray-100 capitalize">{post.user.name}</p>
                                     <p dir='auto' className="text-gray-700 dark:text-gray-400">{post.body}</p>
                                 </div>
                             </>
@@ -192,7 +205,7 @@ export default function Home() {
                                 {/* Icons بعد البودي */}
                                 <div className="ml-4 mt-2 mb-4 flex space-x-2">
                                     <button onClick={() => toggleLike(post._id)}>
-                                        <i className={` fa-heart  cursor-pointer text-xl ${likedPosts.includes(post._id) ? "text-red-500 fa-solid" : " fa-regular text-text-color"}`}></i>
+                                        <i className={` fa-heart mt-1 cursor-pointer text-xl ${likedPosts.includes(post._id) ? "text-red-500 fa-solid" : " fa-regular text-text-color"}`}></i>
                                     </button>
                                     <div className="flex space-x-1 items-center">
                                         <i className="fa-regular fa-comment-dots dark:text-gray-100 text-xl"></i>
