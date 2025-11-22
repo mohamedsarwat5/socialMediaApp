@@ -66,16 +66,16 @@ export default function LoginAndRegister() {
             })
     }
 
-    const routing = () => {
-        const token = localStorage.getItem('token');
-        if (token) {
-            setToken(token); // تحديث الـ context
-            navigate('/home', { replace: true });
-        }
-    }
+  
+
     useEffect(() => {
-        routing()
-    }, [])
+        const token = localStorage.getItem('token'); // جلب الـ token من التخزين
+        if (token) {
+            setToken(token); // حدث الـ context
+            navigate('/home', { replace: true }); // روح للـ home مباشرة
+        }
+    }, []); // [] عشان يشتغل مرة واحدة بعد أول render
+
 
     const formik = useFormik({
         initialValues: {
