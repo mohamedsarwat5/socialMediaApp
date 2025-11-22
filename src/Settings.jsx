@@ -12,7 +12,7 @@ export default function Settings() {
   const [focused, setFocused] = useState(false);
   const newPassword = useRef(null);
   const currentPassword = useRef(null);
-  const { isLoading, setIsLoading ,setToken } = useContext(StoreContext);
+  const { isLoading, setIsLoading, setToken } = useContext(StoreContext);
   const navigate = useNavigate();
 
   const rules = [
@@ -65,7 +65,7 @@ export default function Settings() {
       toast.error('Please fill in all fields');
     }
     else {
-      setShowWarning(true);
+      setShowWarning(prev => !prev);
     }
   }
 
@@ -75,13 +75,13 @@ export default function Settings() {
       <div className={"absolute inset-0 bg-bg-hero flex items-center justify-center z-20 p-4" + (showWarning ? " block" : " hidden")}>
 
         <div className="border border-pink p-5 rounded-lg relative max-w-lg w-full" >
-          <button onClick={() => setShowWarning(false)} className="absolute right-3 top-3 text-sm cursor-pointer">
+          <button onClick={() => setShowWarning(prev => !prev)} className="absolute right-3 top-3 text-sm cursor-pointer">
             <i className="fa-solid fa-xmark text-text-color"></i>
           </button>
           <h2 className=" mb-7 font-semibold text-lg text-text-color">Warning!</h2>
           <p className="text-center text-text-color">Changing your password will log you out of all devices.</p>
           <div className="flex items-center space-x-3 justify-end w-full mt-12">
-            <button onClick={() => setShowWarning(false)} className="px-4 py-2 rounded-md border cursor-pointer text-text-color border-text-color">Cancel</button>
+            <button onClick={() => setShowWarning(prev => !prev)} className="px-4 py-2 rounded-md border cursor-pointer text-text-color border-text-color">Cancel</button>
             <button onClick={(e) => changePassword(e)} className={`bg text-white px-4 py-2 rounded-md cursor-pointer`}>
               {isLoading ? <i className="fa-solid fa-spinner fa-spin"></i> : 'Continue'}
             </button>
@@ -134,7 +134,7 @@ export default function Settings() {
                 </button>
               </div>
             </div>
-            <button onClick={showWarningDialog} type="button" className={`text-white flex items-center justify-center cursor-pointer font-medium rounded-lg text-sm   w-full px-5 py-2.5 text-center mt-4 bg`}>Change Password</button>
+            <button onClick={showWarningDialog} type="button" className={`text-white flex items-center justify-center cursor-pointer font-medium rounded-lg text-sm w-full px-5 py-2.5 text-center mt-4 bg`}>Change Password</button>
           </form>
         </div>
 
