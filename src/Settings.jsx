@@ -72,7 +72,7 @@ export default function Settings() {
 
   return (
     <div className='min-h-dvh flex flex-col items-center px-4 py-19 bg-bg-hero relative'>
-      <div className={"absolute inset-0 bg-bg-hero flex items-center justify-center z-20" + (showWarning ? " block" : " hidden")}>
+      <div className={"absolute inset-0 bg-bg-hero flex items-center justify-center z-20 p-4" + (showWarning ? " block" : " hidden")}>
 
         <div className="border border-pink p-5 rounded-lg relative max-w-lg w-full" >
           <button onClick={() => setShowWarning(false)} className="absolute right-3 top-3 text-sm cursor-pointer">
