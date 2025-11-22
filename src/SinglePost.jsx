@@ -46,8 +46,8 @@ export default function SinglePost() {
     }, [])
 
     return isLoading ?<Loading />: (
-        <div className='min-h-dvh bg-bg-hero flex flex-col p-4 items-center gap-3'>
-            <NavLink to={'/home'} className={'absolute left-4 top-4 z-10 border border-text-color  bg-bg-hero w-10 h-10 flex items-center justify-center rounded-full'}>
+        <div className='min-h-dvh bg-bg-hero flex flex-col px-4 py-19 items-center gap-3'>
+            <NavLink to={'/home'} className={'absolute left-4 top-4 z-10  w-10 h-10 flex items-center justify-center rounded-full'}>
                 <i className="fa-solid fa-arrow-left text-black dark:text-white"></i>
             </NavLink>
 
