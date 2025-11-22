@@ -8,6 +8,8 @@ import Home from './Home'
 import Layout from './Layout'
 import MyProfile from './MyProfile'
 import ProtectedRouting from './ProtectedRouting'
+import SinglePost from './SinglePost'
+import Settings from './Settings'
 
 
 
@@ -22,7 +24,9 @@ export default function App() {
     {
       path: "/home", element: (<ProtectedRouting><Layout /></ProtectedRouting>), children: [
         { index: true, element: <Home /> },
-        { path: 'profile', element: <MyProfile /> }
+        { path: 'profile', element: <MyProfile /> },
+        { path: 'post/:postId', element: <SinglePost /> },
+        { path: 'settings', element: <Settings /> },
 
       ]
     }

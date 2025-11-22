@@ -58,7 +58,7 @@ export default function MyProfile() {
       .then(() => {
         getUserPosts()
       }).catch((err) => console.log(err))
-      // .finally(() => setLoading(false))
+    // .finally(() => setLoading(false))
   }
   const postText = useRef(null)
   const postImg = useRef()
@@ -199,91 +199,91 @@ export default function MyProfile() {
           )}
           <div className='px-4'>
             {
-              userPosts?.map((post, i) => <div key={i} className="container md:w-lg  mx-auto pb-1 mb-4 bg-white dark:bg-gray-950 rounded-xl shadow-md">
+              userPosts?.map((post, i) =>
+                <div key={i} className="container md:w-lg  mx-auto pb-1 mb-4 bg-white dark:bg-gray-950 rounded-xl shadow-md">
+                  {/* Profile */}
+                  <div className=" p-4 relative">
+                    <button onClick={() => handleOpen(post._id)} className='absolute top-3 right-4 cursor-pointer text-text-color'>
+                      <i className="fa-solid fa-ellipsis"></i>
+                    </button>
+                    <div
+                      className={`${openMenu === post._id ? "opacity-100" : "opacity-0"}  space-y-1 bg-bg-hero border border-gray-300 w-[120px] h-[90px] rounded-md absolute right-5 top-10 flex flex-col items-start p-4 duration-300 transition-all`}>
+                      <button onClick={() => deletePost(post._id)} className='flex items-center cursor-pointer text-text-color'>
+                        <span><i className="fa-solid fa-trash-can mr-1"></i></span>
+                        Delete
+                      </button>
+                      <hr className='text-text-color' />
+                      <button className='flex items-center cursor-pointer text-text-color'>
+                        <span><i className="fa-solid fa-pen-to-square mr-1"></i></span>
+                        Edit
+                      </button>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <img
+                        className="h-10 w-10 object-cover rounded-full"
+                        src={post.user?.photo}
+                        alt="profile"
+                      />
+                      <div>
+                        <h2 className="text-gray-800 dark:text-gray-100 font-bold capitalize">{post.user?.name}</h2>
+                        <p className="text-gray-500 dark:text-gray-400 text-xs">
+                          {formatDateTime(post.createdAt)}</p>
+                      </div>
 
-                {/* Profile */}
-                <div className=" p-4 relative">
-                  <button onClick={() => handleOpen(post._id)} className='absolute top-3 right-4 cursor-pointer text-text-color'>
-                    <i className="fa-solid fa-ellipsis"></i>
-                  </button>
-                  <div
-                    className={`${openMenu === post._id ? "opacity-100" : "opacity-0"}  space-y-1 bg-bg-hero border border-gray-300 w-[120px] h-[90px] rounded-md absolute right-5 top-10 flex flex-col items-start p-4 duration-300 transition-all`}>
-                    <button onClick={() => deletePost(post._id)} className='flex items-center cursor-pointer text-text-color'>
-                      <span><i className="fa-solid fa-trash-can mr-1"></i></span>
-                      Delete
-                    </button>
-                    <hr  className='text-text-color'/>
-                    <button className='flex items-center cursor-pointer text-text-color'>
-                      <span><i className="fa-solid fa-pen-to-square mr-1"></i></span>
-                      Edit
-                    </button>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <img
-                      className="h-10 w-10 object-cover rounded-full"
-                      src={post.user?.photo}
-                      alt="profile"
-                    />
-                    <div>
-                      <h2 className="text-gray-800 dark:text-gray-100 font-bold capitalize">{post.user?.name}</h2>
-                      <p className="text-gray-500 dark:text-gray-400 text-xs">
-                        {formatDateTime(post.createdAt)}</p>
                     </div>
 
                   </div>
 
-                </div>
+                  {/* لو في صورة */}
+                  {post.image ? (
+                    <>
+                      <img
+                        className="w-full"
+                        src={post.image}
+                        alt="post"
+                      />
 
-                {/* لو في صورة */}
-                {post.image ? (
-                  <>
-                    <img
-                      className="w-full"
-                      src={post.image}
-                      alt="post"
-                    />
+                      {/* Icons بعد الصورة */}
+                      <div className="ml-4 mt-3 mb-4 flex space-x-2">
+                        <div className="flex space-x-1 items-center">
+                          <button onClick={() => toggleLike(post._id)} className=''>
+                            <i className={` fa-heart  cursor-pointer text-xl ${likedPosts.includes(post._id) ? "text-red-500 fa-solid" : " fa-regular text-text-color"}`}></i>
+                          </button>
+                        </div>
+                        <div className="flex space-x-1 items-center">
+                          <i className="fa-regular fa-comment-dots dark:text-gray-100  text-xl"></i>
+                          <span>{ }</span>
+                        </div>
+                      </div>
 
-                    {/* Icons بعد الصورة */}
-                    <div className="ml-4 mt-3 mb-4 flex space-x-2">
-                      <div className="flex space-x-1 items-center">
-                        <button onClick={() => toggleLike(post._id)} className=''>
+                      {/* Body */}
+                      <div className="mx-4 mt-2 mb-4 space-y-1">
+                        <p className="font-bold text-gray-800 dark:text-gray-100">{post.user.name}</p>
+                        <p dir='auto' className="text-gray-700 dark:text-gray-400">{post.body}</p>
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      {/* Body الأول */}
+                      <div className="mx-4 mt-2 mb-4 space-y-1">
+                        <p className="font-bold text-gray-800">{post.title}</p>
+                        <p dir='auto' className="text-gray-700 dark:text-gray-400">{post.body}</p>
+                      </div>
+
+                      {/* Icons بعد البودي */}
+                      <div className="ml-4 mt-2 mb-4 flex space-x-2">
+                        <button onClick={() => toggleLike(post._id)}>
                           <i className={` fa-heart  cursor-pointer text-xl ${likedPosts.includes(post._id) ? "text-red-500 fa-solid" : " fa-regular text-text-color"}`}></i>
                         </button>
+                        <div className="flex space-x-1 items-center">
+                          <i className="fa-regular fa-comment-dots dark:text-gray-100 text-xl"></i>
+                          <span>{ }</span>
+                        </div>
                       </div>
-                      <div className="flex space-x-1 items-center">
-                        <i className="fa-regular fa-comment-dots dark:text-gray-100  text-xl"></i>
-                        <span>{ }</span>
-                      </div>
-                    </div>
+                    </>
+                  )}
 
-                    {/* Body */}
-                    <div className="mx-4 mt-2 mb-4 space-y-1">
-                      <p className="font-bold text-gray-800 dark:text-gray-100">{post.user.name}</p>
-                      <p dir='auto' className="text-gray-700 dark:text-gray-400">{post.body}</p>
-                    </div>
-                  </>
-                ) : (
-                  <>
-                    {/* Body الأول */}
-                    <div className="mx-4 mt-2 mb-4 space-y-1">
-                      <p className="font-bold text-gray-800">{post.title}</p>
-                      <p dir='auto' className="text-gray-700 dark:text-gray-400">{post.body}</p>
-                    </div>
-
-                    {/* Icons بعد البودي */}
-                    <div className="ml-4 mt-2 mb-4 flex space-x-2">
-                      <button onClick={() => toggleLike(post._id)}>
-                        <i className={` fa-heart  cursor-pointer text-xl ${likedPosts.includes(post._id) ? "text-red-500 fa-solid" : " fa-regular text-text-color"}`}></i>
-                      </button>
-                      <div className="flex space-x-1 items-center">
-                        <i className="fa-regular fa-comment-dots dark:text-gray-100 text-xl"></i>
-                        <span>{ }</span>
-                      </div>
-                    </div>
-                  </>
-                )}
-
-              </div>)
+                </div>)
             }
           </div>
 

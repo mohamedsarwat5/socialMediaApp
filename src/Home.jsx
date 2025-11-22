@@ -9,7 +9,7 @@ import axios from 'axios';
 import { jwtDecode } from 'jwt-decode';
 
 export default function Home() {
-    const { getallPosts,userData,setUserData, getUserData, setIsLoading, isLoading, displayUserData, errorMsg, displayPosts, createPost, imgRef, textRef, openModal, setOpenModal, allPosts, setAllPosts } = useContext(StoreContext);
+    const { getallPosts, userData, setUserData, getUserData, setIsLoading, isLoading, displayUserData, errorMsg, displayPosts, createPost, imgRef, textRef, openModal, setOpenModal, allPosts, setAllPosts } = useContext(StoreContext);
 
     // const [allPosts, setAllPosts] = useState(null);
 
@@ -216,7 +216,7 @@ export default function Home() {
 
                 {/* Posts */}
                 {allPosts?.map((post, i) => (
-                    <div key={i} className="bg-white dark:bg-gray-950 rounded-xl shadow-md md:w-lg">
+                    <div key={i} className="container md:w-lg  mx-auto pb-1 mb-4 bg-white dark:bg-gray-950 rounded-xl shadow-md">
                         <div className="p-4 flex items-center space-x-2">
                             <img
                                 className="h-10 w-10 object-cover rounded-full"
