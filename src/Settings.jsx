@@ -128,7 +128,7 @@ export default function Settings() {
 
                   type="button"
                   onClick={toggleVisibility}
-                  className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-all duration-300"
+                  className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-all theEye duration-300"
                 >
                   {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
                 </button>
@@ -138,6 +138,7 @@ export default function Settings() {
           </form>
         </div>
 
+{/* div not will be happen */}
         {/* Show rules ONLY when focused AND not completed */}
         {focused && !completed && (
           <div className="space-y-1 mt-2 ">
