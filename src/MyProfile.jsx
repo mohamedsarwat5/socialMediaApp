@@ -53,12 +53,12 @@ export default function MyProfile() {
   }
 
   const deletePost = (postId) => {
-    // setLoading(true)
+    setLoading(true)
     axios.delete(`${baseUrl}/posts/${postId}`, { headers: { token: localStorage.getItem('token') } })
       .then(() => {
         getUserPosts()
       }).catch((err) => console.log(err))
-    // .finally(() => setLoading(false))
+    .finally(() => setLoading(false))
   }
   const postText = useRef(null)
   const postImg = useRef()

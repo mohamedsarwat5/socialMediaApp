@@ -94,12 +94,9 @@ export default function Navbar() {
                             </label>
                         </li>
 
-                        <li className='px-4 py-2 flex  items-center hover:bg-pink transition-all duration-200 ease-in-out dark:hover:text-white cursor-pointer space-x-1'>
-                            <i className="fa-solid fa-gear"></i>
-                            <a href="#" className="">Settings</a>
-
-
-                        </li>
+                        <NavLink to={'settings'} className={'flex items-center space-x- px-4 py-2 hover:hover:bg-pink transition-all duration-200 ease-in-out dark:hover:text-white cursor-pointer '}>
+                        <i className='fa-solid fa-gear me-1 w-[19px] '></i>
+                                Settings</NavLink>
 
                     </ul>
                     <div className="py-1">

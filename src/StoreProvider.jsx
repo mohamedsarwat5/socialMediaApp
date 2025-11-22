@@ -87,7 +87,7 @@ export default function StoreProvider({ children }) {
             setOpenModal(false);
             setAllPosts(prev => [res.data.post, ...prev]);
 
-           await displayPosts();
+            await displayPosts();
         } catch (err) {
             console.error(err);
         }
@@ -102,8 +102,34 @@ export default function StoreProvider({ children }) {
         setIsLoading(false);
     };
 
+    function formatDateTime(dateString) {
+        const date = new Date(dateString);
+        const formattedDate = date.toLocaleDateString('en-US');
+        const formattedTime = date.toLocaleTimeString('en-US', {
+            hour: '2-digit',
+            minute: '2-digit',
+            hour12: true
+        });
+        return `${formattedDate} ${formattedTime}`;
+    }
+
+    const [likedPosts, setLikedPosts] = useState(
+        JSON.parse(localStorage.getItem("likedPosts")) || []
+    );
+
+    const toggleLike = (id) => {
+        let updated;
+        if (likedPosts.includes(id)) {
+            updated = likedPosts.filter((postId) => postId !== id);
+        } else {
+            updated = [...likedPosts, id];
+        }
+        setLikedPosts(updated);
+        localStorage.setItem("likedPosts", JSON.stringify(updated));
+    };
+
     return (
-        <StoreContext.Provider value={{ token, setToken, getUserData, getallPosts, errorMsg, createPost, imgRef, textRef, openModal, setOpenModal, allPosts, setAllPosts, displayPosts, setIsLoading, isLoading, displayUserData, userData, setUserData }}>
+        <StoreContext.Provider value={{ token, setToken, getUserData, getallPosts, errorMsg, createPost, imgRef, textRef, openModal, setOpenModal, allPosts, formatDateTime, setAllPosts, displayPosts, setIsLoading, isLoading, displayUserData, userData, setUserData, likedPosts, setLikedPosts }}>
             {children}
         </StoreContext.Provider>
     )

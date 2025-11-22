@@ -9,111 +9,18 @@ import axios from 'axios';
 import { jwtDecode } from 'jwt-decode';
 
 export default function Home() {
-    const { getallPosts, userData, setUserData, getUserData, setIsLoading, isLoading, displayUserData, errorMsg, displayPosts, createPost, imgRef, textRef, openModal, setOpenModal, allPosts, setAllPosts } = useContext(StoreContext);
+    const { getallPosts, userData, formatDateTime, getUserData, setIsLoading, isLoading, displayUserData, errorMsg, displayPosts, createPost, imgRef, textRef, openModal, setOpenModal, allPosts, setAllPosts, likedPosts, toggleLike } = useContext(StoreContext);
 
-    // const [allPosts, setAllPosts] = useState(null);
 
-    const [likedPosts, setLikedPosts] = useState(
-        JSON.parse(localStorage.getItem("likedPosts")) || []
-    );
-
-    const toggleLike = (id) => {
-        let updated;
-        if (likedPosts.includes(id)) {
-            updated = likedPosts.filter((postId) => postId !== id);
-        } else {
-            updated = [...likedPosts, id];
-        }
-        setLikedPosts(updated);
-        localStorage.setItem("likedPosts", JSON.stringify(updated));
-    };
-
-    // const displayPosts = async () => {
-    //     setIsLoading(true);
-    //     let response = await getallPosts();
-    //     const sorted = response.data.posts
-    //         .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
-    //         .slice(0, 50);
-
-    //     setAllPosts(sorted);
-    //     setIsLoading(false);
-    // };
-
-    // const displayUserData = async () => {
-    //     setIsLoading(true);
-    //     const response = await getUserData();
-    //     setUserData(response.data.user);
-    //     setIsLoading(false);
-    // };
 
     useEffect(() => {
         displayPosts();
         displayUserData();
     }, []);
-
-    function formatDateTime(dateString) {
-        const date = new Date(dateString);
-        const formattedDate = date.toLocaleDateString('en-US');
-        const formattedTime = date.toLocaleTimeString('en-US', {
-            hour: '2-digit',
-            minute: '2-digit',
-            hour12: true
-        });
-        return `${formattedDate} ${formattedTime}`;
+    const [openMenu, setOpenMenu] = useState(null)
+    const handleOpen = (postId) => {
+        setOpenMenu(id => id === postId ? null : postId)
     }
-
-    // const baseUrl = import.meta.env.VITE_BASE_URL;
-
-    // const [openModal, setOpenModal] = useState(false);
-    // const textRef = useRef(null);
-    // const imgRef = useRef(null);
-
-    // const token = localStorage.getItem('token');
-    // const decode = token ? jwtDecode(token) : null;
-
-    // const [errorMsg, setErrorMsg] = useState("");
-
-    // const createPost = async (e) => {
-    //     e.preventDefault();
-
-    //     const text = textRef.current?.value.trim();
-    //     const image = imgRef.current?.files?.[0];
-
-    //     // لو مفيش كتابة وفي صورة → ممنوع
-    //     if (!text && image) {
-    //         setErrorMsg("You must write something");
-    //         return;
-    //     }
-
-    //     // لو مفيش كتابة ومفيش صورة → ممنوع
-    //     if (!text && !image) {
-    //         setErrorMsg("You can't post empty post");
-    //         return;
-    //     }
-
-    //     setErrorMsg(""); // clear old errors
-
-    //     const formData = new FormData();
-    //     if (image) {
-    //         formData.append("image", image);
-    //     }
-    //     formData.append("body", text);
-
-    //     try {
-    //         const res = await axios.post(`${baseUrl}/posts`, formData, {
-    //             headers: { token: localStorage.getItem('token') }
-    //         });
-
-    //         if (textRef.current) textRef.current.value = "";
-    //         if (imgRef.current) imgRef.current.value = null;
-
-    //         setOpenModal(false);
-    //         setAllPosts(prev => [res.data.post, ...prev]);
-    //         displayPosts();
-    //     } catch (err) {
-    //         console.error(err);
-    //     }
-    // };
 
     return isLoading ? (
         <Loading />
@@ -217,7 +124,18 @@ export default function Home() {
                 {/* Posts */}
                 {allPosts?.map((post, i) => (
                     <div key={i} className="container md:w-lg  mx-auto pb-1 mb-4 bg-white dark:bg-gray-950 rounded-xl shadow-md">
-                        <div className="p-4 flex items-center space-x-2">
+                        <div className="p-4 flex items-center space-x-2 relative">
+                            <button onClick={() => handleOpen(post._id)} className=' absolute top-3 right-4 cursor-pointer text-text-color'>
+                                <i className="fa-solid fa-ellipsis"></i>
+                            </button>
+                            <div
+                                className={`${openMenu === post._id ? "opacity-100" : "opacity-0"}   bg-bg-hero border border-gray-300 w-fit h-fit rounded-md absolute right-5 top-10 flex flex-col  px-3 py-1 duration-300 transition-all`}>
+                                <Link to={`post/${post._id}`} className='flex items-center cursor-pointer text-text-color'>
+                                    {/* <span><i className="fa-solid fa-trash-can mr-1"></i></span> */}
+                                    view post
+                                </Link>
+
+                            </div>
                             <img
                                 className="h-10 w-10 object-cover rounded-full"
                                 src={post?.user.photo}
@@ -233,9 +151,7 @@ export default function Home() {
                             </div>
                         </div>
 
-                        {post.image && (
-                            <img className="w-full" src={post.image} alt="post" />
-                        )}
+
 
                         <div className="ml-4 mt-3 mb-4 flex space-x-2">
                             <button onClick={() => toggleLike(post._id)}>
@@ -258,6 +174,7 @@ export default function Home() {
                                 {post.body}
                             </p>
                         </div>
+
                     </div>
                 ))}
             </div>

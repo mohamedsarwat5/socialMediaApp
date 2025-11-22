@@ -25,7 +25,7 @@ export default function App() {
       path: "/home", element: (<ProtectedRouting><Layout /></ProtectedRouting>), children: [
         { index: true, element: <Home /> },
         { path: 'profile', element: <MyProfile /> },
-        { path: 'post/:postId', element: <SinglePost /> },
+        { path: 'post/:id', element: <SinglePost /> },
         { path: 'settings', element: <Settings /> },
 
       ]
