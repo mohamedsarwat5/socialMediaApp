@@ -134,9 +134,16 @@ export default function StoreProvider({ children }) {
         setLikedPosts(updated);
         localStorage.setItem("likedPosts", JSON.stringify(updated));
     };
+    useEffect(() => {
+        const savedToken = localStorage.getItem("token");
+        if (savedToken) {
+            setToken(savedToken);
+        }
+    }, []);
+
 
     return (
-        <StoreContext.Provider value={{ token, setToken, getUserData, getallPosts, errorMsg, createPost, imgRef, textRef, openModal, setOpenModal, allPosts, formatDateTime, setAllPosts, displayPosts, setIsLoading, isLoading, displayUserData, userData, setUserData, likedPosts, setLikedPosts,toggleLike }}>
+        <StoreContext.Provider value={{ token, setToken, getUserData, getallPosts, errorMsg, createPost, imgRef, textRef, openModal, setOpenModal, allPosts, formatDateTime, setAllPosts, displayPosts, setIsLoading, isLoading, displayUserData, userData, setUserData, likedPosts, setLikedPosts, toggleLike }}>
             {children}
         </StoreContext.Provider>
     )

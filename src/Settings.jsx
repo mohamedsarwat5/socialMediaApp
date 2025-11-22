@@ -12,7 +12,7 @@ export default function Settings() {
   const [focused, setFocused] = useState(false);
   const newPassword = useRef(null);
   const currentPassword = useRef(null);
-  const { isLoading, setIsLoading } = useContext(StoreContext);
+  const { isLoading, setIsLoading ,setToken } = useContext(StoreContext);
   const navigate = useNavigate();
 
   const rules = [
@@ -48,7 +48,9 @@ export default function Settings() {
       currentPassword.current.value = '';
       newPassword.current.value = '';
       localStorage.removeItem('token');
-      navigate('/');
+      setToken(null);        // مهم جدا
+      navigate('/', { replace: true });
+
     })
       .catch((error) => {
         toast.error("Invalid current password");
@@ -97,7 +99,7 @@ export default function Settings() {
 
         <div className="relative space-y-2">
 
-          <form >
+          <form onSubmit={(e) => e.preventDefault()}>
             <label className="text-sm font-medium text-text-color">Current password</label>
             <input type="password"
               required

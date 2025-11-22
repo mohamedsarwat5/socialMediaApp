@@ -54,9 +54,9 @@ export default function LoginAndRegister() {
                 resetForm()
                 console.log("hello")
                 if (res.data.message === 'success') {
-                    setToken(res.data.token)
-                    localStorage.setItem('token', res.data.token)
-                    navigate('/home')
+                    setToken(res.data.token);
+                    localStorage.setItem("token", res.data.token);
+                    navigate('/home', { replace: true });
                 }
             }).catch((err) => {
                 toast.error(err.response?.data.error)
@@ -67,8 +67,10 @@ export default function LoginAndRegister() {
     }
 
     const routing = () => {
-        if (localStorage.getItem('token')) {
-            navigate('/home')
+        const token = localStorage.getItem('token');
+        if (token) {
+            setToken(token); // تحديث الـ context
+            navigate('/home', { replace: true });
         }
     }
     useEffect(() => {
