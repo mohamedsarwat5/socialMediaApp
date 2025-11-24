@@ -4,24 +4,78 @@ import Loading from './Loading';
 import Navbar from './Navbar';
 import profile from '/user.png';
 import Stories from './Stories';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import axios from 'axios';
 import { jwtDecode } from 'jwt-decode';
+import { Send } from 'lucide-react';
+// import { Send } from 'lucide-react';
+
 
 export default function Home() {
     const { getallPosts, userData, formatDateTime, getUserData, setIsLoading, isLoading, displayUserData, errorMsg, displayPosts, createPost, imgRef, textRef, openModal, setOpenModal, allPosts, setAllPosts, likedPosts, toggleLike } = useContext(StoreContext);
 
+    const baseUrl = import.meta.env.VITE_BASE_URL;
+    const commentRef = useRef();
+    const [comments, setComments] = useState([]);
+    const [commentLoading, setCommentLoading] = useState({});
 
+
+    const getPostComments = (id) => {
+        setCommentLoading(prev => ({ ...prev, [id]: true }));
+
+        axios.get(`${baseUrl}/posts/${id}/comments`, {
+            headers: { token: localStorage.getItem('token') }
+        })
+            .then((response) => {
+                setComments(prev => ({ ...prev, [id]: response.data.comments }));
+            })
+            .catch((error) => {
+                console.log(error.response?.data);
+            })
+            .finally(() => {
+                setCommentLoading(prev => ({ ...prev, [id]: false }));
+            });
+    };
+
+
+    const [commentTexts, setCommentTexts] = useState({});
+
+    const CreateComment = (id, text) => {
+        if (!text.trim()) return;
+
+        axios.post(`${baseUrl}/comments`, {
+            content: text,
+            post: id
+        }, {
+            headers: { token: localStorage.getItem('token') }
+        })
+            .then(() => {
+                getPostComments(id);
+            })
+            .catch((error) => {
+                console.log(error.response?.data);
+            });
+    };
+
+
+    useEffect(() => {
+        if (allPosts?.length) {
+            allPosts.forEach(post => getPostComments(post._id));
+        }
+    }, [allPosts]);
 
     useEffect(() => {
         displayPosts();
         displayUserData();
     }, []);
+
     const [openMenu, setOpenMenu] = useState(null)
+
     const handleOpen = (postId) => {
         setOpenMenu(id => id === postId ? null : postId)
     }
-    const [openPhotoModal, setOpenPhotoModal] = useState(false);
+
+
 
     return isLoading ? (
         <Loading />
@@ -125,9 +179,7 @@ export default function Home() {
                 {/* Posts */}
                 {allPosts?.map((post, i) => (
                     <div key={i} className="relative overflow-hidden container md:w-lg  mx-auto pb-1 mb-4 bg-white dark:bg-gray-950 rounded-xl shadow-md">
-                        {/* <div className='absolute inset-0 bg-text-color z-30'></div> */}
                         {/* Profile */}
-
                         <div className=" p-4 relative">
                             <button onClick={() => handleOpen(post._id)} className='absolute top-3 right-4 cursor-pointer text-text-color'>
                                 <i className="fa-solid fa-ellipsis"></i>
@@ -160,20 +212,10 @@ export default function Home() {
                         {post.image ? (
                             <>
                                 <img
-                                    // onClick={() => setOpenPhotoModal(true)}
                                     className="w-full object-cover max-h-[400px]"
                                     src={post.image}
                                     alt="post"
                                 />
-                                {/* {openPhotoModal && (
-                                    <div className='fixed inset-0 bg-bg-hero flex items-center justify-center'>
-                                        <button onClick={() => setOpenPhotoModal(false)} className='absolute left-3 top-3 text-text-color'>
-                                            <i className="fa-solid fa-xmark text-2xl"></i>
-                                        </button>
-                                        <img src={post.image} />
-                                    </div>
-                                )} */}
-
                                 {/* Icons بعد الصورة */}
                                 <div className="ml-4 mt-3 mb-4 flex space-x-2">
                                     <div className="flex space-x-1 items-center">
@@ -182,10 +224,9 @@ export default function Home() {
                                         </button>
                                         {/* {likedPosts.includes(post._id)? <span>Loved</span> :  <span>Love</span>} */}
                                     </div>
-                                    <div className="flex space-x-1 items-center">
-                                        <i className="fa-regular fa-comment-dots dark:text-gray-100  text-xl"></i>
-                                        <span>{ }</span>
-                                    </div>
+                                    <button >
+                                        <i className="fa-regular fa-comment-dots dark:text-gray-100 text-xl"></i>
+                                    </button>
                                 </div>
 
                                 {/* Body */}
@@ -207,15 +248,73 @@ export default function Home() {
                                     <button onClick={() => toggleLike(post._id)}>
                                         <i className={` fa-heart mt-1 cursor-pointer text-xl ${likedPosts.includes(post._id) ? "text-red-500 fa-solid" : " fa-regular text-text-color"}`}></i>
                                     </button>
-                                    <div className="flex space-x-1 items-center">
+                                    <button>
                                         <i className="fa-regular fa-comment-dots dark:text-gray-100 text-xl"></i>
-                                        <span>{ }</span>
-                                    </div>
+                                    </button>
                                 </div>
                             </>
                         )}
 
+                        {/* display comments */}
+
+                        {!comments[post._id] || comments[post._id].length === 0 ? (
+                            ""
+                        ) : commentLoading[post._id] ? (
+                            <p className="text-gray-700 text-sm text-center dark:text-gray-400">Loading comments...</p>
+                        ) : (
+                            comments[post._id]?.slice(0, 3).map((comment) => (
+                                <div key={comment._id} className="mb-3">
+                                    <div className="flex items-center space-x-2 px-4 ">
+                                        <span className="w-8 h-8   rounded-full border flex items-center justify-center bg-gray-100">
+                                            {comment?.commentCreator?.name?.trim("").slice(0, 1).toUpperCase()}
+                                        </span>
+                                        <div className="flex flex-col justify-center">
+                                            <h2 className="text-gray-800 dark:text-gray-100 font-bold capitalize">
+                                                {comment?.commentCreator?.name}
+                                            </h2>
+                                            <p dir="auto" className="text-gray-700 dark:text-gray-400">
+                                                {comment?.content}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            ))
+                        )}
+
+
+
+
+
+                        {/* create comment */}
+                        <div className=' mx-auto max-w-xs w-full lg:w-[450px] mb-3 lg:mb-4 relative'>
+                            <button
+                                onClick={() => {
+                                    CreateComment(post._id, commentTexts[post._id]);
+                                    setCommentTexts(prev => ({ ...prev, [post._id]: "" })); // مسح الفورم بعد الإرسال
+                                }}
+                                className='absolute right-0 top-1/2 -translate-y-1/2 p-2 text-text-color cursor-pointer'
+                            >
+                                <Send size={16} strokeWidth={1.5} />
+                            </button>
+
+                            <input
+                                value={commentTexts[post._id] || ""}
+                                onChange={(e) => setCommentTexts(prev => ({
+                                    ...prev,
+                                    [post._id]: e.target.value
+                                }))}
+                                ref={commentRef} type="text" className='border w-full text-text-color py-1 pl-4 pr-8 rounded-3xl' placeholder='Write a comment' />
+                        </div>
+                        {comments[post._id] && comments[post._id].length > 3 && (
+                            <NavLink to={`post/${post._id}`} className='text-text-color hover:underline text-center block mb-3'>
+                                View all comments
+                            </NavLink>
+                        )}
+                        {!comments[post._id] || comments[post._id].length === 0 && (
+                            <p className="text-text-color  text-center block mb-3">No comments yet.</p>
+                        )}
                     </div>
+
                 ))}
             </div>
         </>

@@ -29,8 +29,8 @@ export default function Navbar() {
     const displayUserData = async () => {
         setIsLoading(true)
         const response = await getUserData()
-        // console.log(response)
         setUserData(response.data.user)
+        console.log(response.data.user)
         setIsLoading(false)
     }
     useEffect(() => {
