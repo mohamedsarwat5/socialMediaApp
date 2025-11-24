@@ -303,7 +303,7 @@ export default function Home() {
                                     ...prev,
                                     [post._id]: e.target.value
                                 }))}
-                                ref={commentRef} type="text" className='border w-full text-text-color py-1 pl-4 pr-8 rounded-3xl' placeholder='Write a comment' />
+                                ref={commentRef} type="text" className='border w-full outline-none text-text-color py-1 pl-4 pr-8 rounded-3xl' placeholder='Write a comment' />
                         </div>
                         {comments[post._id] && comments[post._id].length > 3 && (
                             <NavLink to={`post/${post._id}`} className='text-text-color hover:underline text-center block mb-3'>

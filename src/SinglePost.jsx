@@ -153,7 +153,7 @@ export default function SinglePost() {
                     <button onClick={CreateComment} className='absolute right-0 top-1/2 -translate-y-1/2 p-2 text-text-color cursor-pointer'>
                         <Send size={16} strokeWidth={1.5} />
                     </button>
-                    <input ref={commentRef} type="text" className='border w-full text-text-color py-1 pl-4 pr-8 rounded-3xl' placeholder='Write a comment' />
+                    <input ref={commentRef} type="text" className='border w-full outline-none text-text-color py-1 pl-4 pr-8 rounded-3xl' placeholder='Write a comment' />
                 </div>
 
                 <div className={`mx-2 mb-4`}>
