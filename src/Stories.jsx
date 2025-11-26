@@ -14,7 +14,7 @@ const stories = [
         user: "David Wilson",
         avatar: "https://randomuser.me/api/portraits/men/55.jpg"
     },
-    ,
+
     {
         id: 6,
         image: "https://picsum.photos/300/500?random=6",
